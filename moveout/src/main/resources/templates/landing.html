@@ -15,7 +15,7 @@
     <div class="login-page">
         <div class="form">
       
-          <form method="post" th:action="@{/newad}" th:object="${adv}">
+          <form method="post" th:action="@{/landing/newad}" th:object="${adv}">
             <label>Product Name</label>
             <input type="text" th:field="*{product}"/>
             <br>

@@ -5,6 +5,7 @@ public class AdClass {
     private String category;
     private String condition;
     private String location;
+    private String user;
 
     public void setProduct(String product){
         this.product = product;
@@ -36,5 +37,13 @@ public class AdClass {
 
     public String getLocation(){
         return this.location;
+    }
+
+    public void setUser(String user){
+        this.user = user;
+    }
+
+    public String getUser(){
+        return this.user;
     }
 }
