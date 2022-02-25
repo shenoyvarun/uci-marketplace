@@ -13,6 +13,7 @@ public class AdDBController {
     @PostMapping(value = "/addAd", consumes = "application/json")
     public String pushNewAdIntoDB(@RequestBody JSONObject adData){
         System.out.println("reached here somehow");
+        //connect DB
         
         return "trying to add in DB";
     }
