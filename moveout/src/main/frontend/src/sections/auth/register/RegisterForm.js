@@ -87,7 +87,6 @@ export default function RegisterForm() {
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
           />
-
           <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
             Register
           </LoadingButton>
