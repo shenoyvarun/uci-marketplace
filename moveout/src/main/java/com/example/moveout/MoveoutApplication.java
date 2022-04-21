@@ -17,8 +17,8 @@ public class MoveoutApplication {
 			return new WebMvcConfigurer() {
 				@Override
 				public void addCorsMappings(CorsRegistry registry) {
-					registry.addMapping("/landing").allowedOrigins(frontEndHost);
-					registry.addMapping("/login").allowedOrigins(frontEndHost);
+					registry.addMapping("/loginApi").allowedOrigins(frontEndHost);
+					registry.addMapping("/registerApi").allowedOrigins(frontEndHost);
 				}
 			};
 		}

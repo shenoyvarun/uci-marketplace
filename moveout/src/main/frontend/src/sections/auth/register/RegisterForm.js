@@ -7,6 +7,8 @@ import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
+import axios from "axios";
+import {REGISTER_USER} from "../../../api-config";
 
 // ----------------------------------------------------------------------
 
@@ -30,8 +32,15 @@ export default function RegisterForm() {
       password: '',
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+    onSubmit: ( values) => {
+      console.log("Passing Registration Details to Backend ", values);
+      axios.post(REGISTER_USER, values).then((response) => {
+        console.log(response);
+        navigate('/postlogin', { replace: true });
+      }).catch((error) => {
+        console.log(error);
+        navigate('/404', { replace: true });
+      })
     },
   });
 
