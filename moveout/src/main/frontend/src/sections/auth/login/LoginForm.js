@@ -2,13 +2,18 @@ import * as Yup from 'yup';
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
+import axios from 'axios';
 // material
 import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
-
+import {LOGIN_USER} from "../../../api-config";
 // ----------------------------------------------------------------------
+
+const headers = {
+  'Content-Type': 'application/json'
+}
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -27,8 +32,15 @@ export default function LoginForm() {
       remember: true,
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+    onSubmit: ( values) => {
+      console.log("Passing to Backend ", values);
+      axios.post(LOGIN_USER, values).then((response) => {
+        console.log(response);
+        navigate('/postlogin', { replace: true });
+      }).catch((error) => {
+        console.log(error);
+        navigate('/404', { replace: true });
+      })
     },
   });
 
@@ -37,6 +49,7 @@ export default function LoginForm() {
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
+
 
   return (
     <FormikProvider value={formik}>

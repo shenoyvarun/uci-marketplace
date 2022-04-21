@@ -91,7 +91,7 @@ export default function Register() {
               Get started absolutely free.
             </Typography>
 
-            <AuthSocial />
+            {/*<AuthSocial />*/}
 
             <RegisterForm />
 

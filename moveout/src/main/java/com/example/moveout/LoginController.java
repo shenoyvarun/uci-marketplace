@@ -1,38 +1,30 @@
 package com.example.moveout;
 
-import com.example.moveout.AdClass;
-import com.example.moveout.UserClass;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 public class LoginController {
 
 	@RequestMapping("/login")
 	public String loginPage(Model model) {
-		System.out.println("jgkjgk");
         model.addAttribute("user", new UserClass());
 		return "login";
 	}
 
     @PostMapping("/landing")
-    public String loginSubmit(@ModelAttribute UserClass user, Model model){
-        System.out.println(user.getUsername());
+    public ResponseEntity<?> loginSubmit(@RequestBody UserClass user){
+        System.out.println(user.getEmail());
         System.out.println(user.getPassword());
-        if(user.getUsername().equals("buyer1") && user.getPassword().equals("123")){
-            model.addAttribute("user", user);
-            model.addAttribute("adv", new AdClass());
-            return "landing";
+        if(user.getEmail().equals("buyer1@gmail.com") && user.getPassword().equals("123")){
+            return new ResponseEntity<>("Success", HttpStatus.OK);
         }
         else{
-            return "error";
+            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
     }
-
 }
-//testgi
