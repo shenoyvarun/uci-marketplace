@@ -1,12 +1,10 @@
 import * as Yup from 'yup';
 import * as React from 'react';
-import { useState } from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
 // material
-import { Stack, TextField, InputLabel, Select, MenuItem, Button } from '@mui/material';
+import { Stack, TextField, MenuItem } from '@mui/material';
 
 // component
-import Iconify from '../../components/Iconify';
 import {LoadingButton} from "@mui/lab";
 import {useNavigate} from "react-router-dom";
 
@@ -14,24 +12,11 @@ import {useNavigate} from "react-router-dom";
 // ----------------------------------------------------------------------
 
 const categories = [
-    {
-        value: 'catFur',
-        label: 'Furniture',
-    },
-    {
-        value: 'catKitchen',
-        label: 'Kitchen Supplies',
-    },
-    {
-        value: 'catElec',
-        label: 'Electronics',
-    },
-    {
-        value: 'catClo',
-        label: 'Clothes',
-    },
+    {value: 'catFur', label: 'Furniture',},
+    {value: 'catKitchen', label: 'Kitchen Supplies',},
+    {value: 'catElec', label: 'Electronics',},
+    {value: 'catClo', label: 'Clothes',},
 ];
-
 
 export default function PostAdForm() {
     const navigate = useNavigate();
@@ -50,23 +35,10 @@ export default function PostAdForm() {
             prdDec: ''
         },
         validationSchema: ProductDetailsValidation,
-        onSubmit: () => {
-            navigate('/login', { replace: true });
+        onSubmit: values => {
+            console.log('Form data', values)
         },
     });
-
-
-    //const [prdName, setPrdName] = React.useState('');
-    const [prdType, setPrdType] = React.useState('');
-    //const [prdCondition, setPrdCondition] = React.useState('');
-
-    // const handlePrdNameChange = (event) => {
-    //     this.setState({prdName: event.target.value});
-    // };
-
-    const handleProductCategoryChange = (event) => {
-        setPrdType(event.target.value);
-    };
 
     const { errors, touched, handleSubmit, getFieldProps, isSubmitting } = formik;
 
@@ -76,10 +48,11 @@ export default function PostAdForm() {
                 <Stack spacing={3}>
                     <TextField
                         fullWidth
-                        autoComplete="prdName"
                         id="product-name"
+                        type = "text"
                         label="Product Name"
-                        //value={this.state.value}
+                        onChange={formik.handleChange}
+                        value={formik.values.prdName}
                         {...getFieldProps('prdName')}
                         error={Boolean(touched.prdName && errors.prdName)}
                         helperText={touched.prdName && errors.prdName}
@@ -87,13 +60,12 @@ export default function PostAdForm() {
 
                     <TextField
                         fullWidth
-                        autoComplete="prdType"
                         id="product-type"
                         select
                         label="Category"
-                        value={prdType}
-                        onChange={handleProductCategoryChange}
-                        helperText="Select product category"
+                        type = "text"
+                        value={formik.values.prdType}
+                        onChange={formik.handleChange}
                         {...getFieldProps('prdType')}
                         error={Boolean(touched.prdType && errors.prdType)}
                         helperText={touched.prdType && errors.prdType}
@@ -107,9 +79,11 @@ export default function PostAdForm() {
 
                     <TextField
                         fullWidth
-                        autoComplete="prdCondition"
                         id="product-condition"
                         label="Product Condition"
+                        type = "text"
+                        onChange={formik.handleChange}
+                        value={formik.values.prdCondition}
                         {...getFieldProps('prdCondition')}
                         error={Boolean(touched.prdCondition && errors.prdCondition)}
                         helperText={touched.prdCondition && errors.prdCondition}
@@ -117,12 +91,14 @@ export default function PostAdForm() {
 
                     <TextField
                         fullWidth
-                        autoComplete="prdDec"
                         id="product-description"
                         label="Description"
+                        type = "text"
                         multiline
                         rows={4}
-                        {...getFieldProps('productDescription')}
+                        onChange={formik.handleChange}
+                        value={formik.values.prdDec}
+                        {...getFieldProps('prdDec')}
                         error={Boolean(touched.prdDec && errors.prdDec)}
                         helperText={touched.prdDec && errors.prdDec}
                     />
