@@ -16,7 +16,7 @@ public class RegisterController {
     private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
     @PostMapping("/registerApi")
     public ResponseEntity<?> loginSubmit(@RequestBody UserClass user){
-            logger.info(user.getFirstName() + " " + user.getLastName() + " " + user.getEmail() + " " + user.getPassword());
+            logger.info(user.getFirstName() + "" + user.getLastName() + " " + user.getEmail() + " " + user.getPassword());
             return new ResponseEntity<>(user, HttpStatus.OK);
 //        else
 //            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
