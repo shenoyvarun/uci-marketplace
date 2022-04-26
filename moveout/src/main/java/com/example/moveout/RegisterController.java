@@ -19,7 +19,7 @@ public class RegisterController {
     @Autowired
     private UserRepository UserRepository;
     @PostMapping("/registerApi")
-    public ResponseEntity<?> loginSubmit(@RequestBody UserClass user) throws NoSuchAlgorithmException {
+    public ResponseEntity<?> registerSubmit(@RequestBody UserClass user) throws NoSuchAlgorithmException {
         String password = user.getPassword();
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(password.getBytes());
