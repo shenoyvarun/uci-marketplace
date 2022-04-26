@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class userTable {
+public class UserTable {
     private int id;
     private String firstName;
     private String lastName;
@@ -22,10 +22,10 @@ public class userTable {
     }
 
     private String phoneNumber;
-    public userTable() {
+    public UserTable() {
     }
 
-    public userTable(int id, String firstName, String lastName, String email, String password, String phoneNumber) {
+    public UserTable(int id, String firstName, String lastName, String email, String password, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
