@@ -41,7 +41,8 @@ export default function RegisterForm() {
         navigate('/postlogin', { replace: true });
       }).catch((error) => {
         console.log(error);
-        navigate('/404', { replace: true });
+        alert("Email already exists.Login using this email.");
+        navigate('/login', { replace: true });
       })
     },
   });

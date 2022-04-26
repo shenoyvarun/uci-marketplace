@@ -25,8 +25,10 @@ public class RegisterController {
         md.update(password.getBytes());
         byte[] digest = md.digest();
         String encryptedPassword = DatatypeConverter.printHexBinary(digest).toUpperCase();
-            logger.info(user.getFirstName() + "" + user.getLastName() + " " + user.getEmail() + " " + user.getPassword() + " " + user.getPhoneNumber() + " " +encryptedPassword);
-            UserTable values = new UserTable();
+        logger.info(user.getFirstName() + "" + user.getLastName() + " " + user.getEmail() + " " + user.getPassword() + " " + user.getPhoneNumber() + " " +encryptedPassword);
+        UserTable values = new UserTable();
+        UserTable userInfo = UserRepository.findByEmail(user.getEmail());
+        if((userInfo == null) || !(user.getEmail().equalsIgnoreCase(userInfo.getEmail()))){
             values.setFirstName(user.getFirstName());
             values.setLastName(user.getLastName());
             values.setPhoneNumber(user.getPhoneNumber());
@@ -34,8 +36,8 @@ public class RegisterController {
             values.setPassword(encryptedPassword);
             UserRepository.save(values);
             return new ResponseEntity<>(user, HttpStatus.OK);
-
-//        else
-//            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        }
+        else
+            return new ResponseEntity<>("Email already exists", HttpStatus.UNAUTHORIZED);
     }
 }
