@@ -39,7 +39,8 @@ export default function LoginForm() {
                 navigate('/postad', { replace: true });
             }).catch((error) => {
                 console.log(error);
-                navigate('/404', { replace: true });
+                alert("Email is not registered.");
+                navigate('/register', { replace: true });
             })
         },
     });

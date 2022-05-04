@@ -20,6 +20,7 @@ public class MoveoutApplication {
 					registry.addMapping("/loginApi").allowedOrigins(frontEndHost);
 					registry.addMapping("/registerApi").allowedOrigins(frontEndHost);
 					registry.addMapping("/addProduct").allowedOrigins(frontEndHost);
+					registry.addMapping("/getAllProducts").allowedOrigins(frontEndHost);
 				}
 			};
 		}

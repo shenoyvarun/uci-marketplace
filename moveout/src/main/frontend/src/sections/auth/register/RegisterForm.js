@@ -38,7 +38,7 @@ export default function RegisterForm() {
       console.log("Passing Registration Details to Backend ", values);
       axios.post(REGISTER_USER, values).then((response) => {
         console.log(response);
-        navigate('/postlogin', { replace: true });
+        navigate('/login', { replace: true });
       }).catch((error) => {
         console.log(error);
         alert("Email already exists.Login using this email.");
