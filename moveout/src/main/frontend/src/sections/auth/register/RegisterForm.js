@@ -22,6 +22,7 @@ export default function RegisterForm() {
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
+    phoneNumber: Yup.string().required('Phone Number is required')
   });
 
   const formik = useFormik({
@@ -30,16 +31,18 @@ export default function RegisterForm() {
       lastName: '',
       email: '',
       password: '',
+      phoneNumber: '',
     },
     validationSchema: RegisterSchema,
     onSubmit: ( values) => {
       console.log("Passing Registration Details to Backend ", values);
       axios.post(REGISTER_USER, values).then((response) => {
         console.log(response);
-        navigate('/postlogin', { replace: true });
+        navigate('/login', { replace: true });
       }).catch((error) => {
         console.log(error);
-        navigate('/404', { replace: true });
+        alert("Email already exists.Login using this email.");
+        navigate('/login', { replace: true });
       })
     },
   });
@@ -67,6 +70,16 @@ export default function RegisterForm() {
               helperText={touched.lastName && errors.lastName}
             />
           </Stack>
+
+          <TextField
+              fullWidth
+              autoComplete="Phone Number"
+              type="number"
+              label="Phone Number"
+              {...getFieldProps('phoneNumber')}
+              error={Boolean(touched.phoneNumber && errors.phoneNumber)}
+              helperText={touched.phoneNumber && errors.phoneNumber}
+          />
 
           <TextField
             fullWidth

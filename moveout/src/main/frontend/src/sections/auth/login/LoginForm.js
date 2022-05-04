@@ -12,95 +12,96 @@ import {LOGIN_USER} from "../../../api-config";
 // ----------------------------------------------------------------------
 
 const headers = {
-  'Content-Type': 'application/json'
+    'Content-Type': 'application/json'
 }
 
 export default function LoginForm() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
-  const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
-  });
+    const LoginSchema = Yup.object().shape({
+        email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+        password: Yup.string().required('Password is required'),
+    });
 
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-      remember: true,
-    },
-    validationSchema: LoginSchema,
-    onSubmit: ( values) => {
-      console.log("Passing to Backend ", values);
-      axios.post(LOGIN_USER, values).then((response) => {
-        console.log(response);
-        navigate('/postlogin', { replace: true });
-      }).catch((error) => {
-        console.log(error);
-        navigate('/404', { replace: true });
-      })
-    },
-  });
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+            remember: true,
+        },
+        validationSchema: LoginSchema,
+        onSubmit: ( values) => {
+            console.log("Passing to Backend ", values);
+            axios.post(LOGIN_USER, values).then((response) => {
+                console.log(response);
+                navigate('/dashboard/products', { replace: true });
+            }).catch((error) => {
+                console.log(error);
+                alert("Email is not registered.");
+                navigate('/register', { replace: true });
+            })
+        },
+    });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+    const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
 
-  const handleShowPassword = () => {
-    setShowPassword((show) => !show);
-  };
-
-
-  return (
-    <FormikProvider value={formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack spacing={3}>
-          <TextField
-            fullWidth
-            autoComplete="username"
-            type="email"
-            label="Email address"
-            {...getFieldProps('email')}
-            error={Boolean(touched.email && errors.email)}
-            helperText={touched.email && errors.email}
-          />
-
-          <TextField
-            fullWidth
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
-            label="Password"
-            {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleShowPassword} edge="end">
-                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
-          />
-        </Stack>
-
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-          <FormControlLabel
-            control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
-            label="Remember me"
-          />
+    const handleShowPassword = () => {
+        setShowPassword((show) => !show);
+    };
 
 
-          <Link variant="subtitle2" component={RouterLink} to="/register">
-             Sign up?
-          </Link>
-        </Stack>
+    return (
+        <FormikProvider value={formik}>
+            <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+                <Stack spacing={3}>
+                    <TextField
+                        fullWidth
+                        autoComplete="username"
+                        type="email"
+                        label="Email address"
+                        {...getFieldProps('email')}
+                        error={Boolean(touched.email && errors.email)}
+                        helperText={touched.email && errors.email}
+                    />
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-          Login
-        </LoadingButton>
-      </Form>
-    </FormikProvider>
-  );
+                    <TextField
+                        fullWidth
+                        autoComplete="current-password"
+                        type={showPassword ? 'text' : 'password'}
+                        label="Password"
+                        {...getFieldProps('password')}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton onClick={handleShowPassword} edge="end">
+                                        <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                        error={Boolean(touched.password && errors.password)}
+                        helperText={touched.password && errors.password}
+                    />
+                </Stack>
+
+                <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+                    <FormControlLabel
+                        control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
+                        label="Remember me"
+                    />
+
+
+                    <Link variant="subtitle2" component={RouterLink} to="/register">
+                        Sign up?
+                    </Link>
+                </Stack>
+
+                <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+                    Login
+                </LoadingButton>
+            </Form>
+        </FormikProvider>
+    );
 }

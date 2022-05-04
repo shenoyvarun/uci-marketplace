@@ -19,6 +19,8 @@ public class MoveoutApplication {
 				public void addCorsMappings(CorsRegistry registry) {
 					registry.addMapping("/loginApi").allowedOrigins(frontEndHost);
 					registry.addMapping("/registerApi").allowedOrigins(frontEndHost);
+					registry.addMapping("/addProduct").allowedOrigins(frontEndHost);
+					registry.addMapping("/getAllProducts").allowedOrigins(frontEndHost);
 				}
 			};
 		}

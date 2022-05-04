@@ -6,6 +6,15 @@ public class UserClass {
     private String firstName;
     private String lastName;
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    private String phoneNumber;
 
     public String getFirstName() {
         return firstName;
