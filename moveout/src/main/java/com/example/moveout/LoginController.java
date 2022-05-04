@@ -1,38 +1,49 @@
 package com.example.moveout;
 
-import com.example.moveout.AdClass;
-import com.example.moveout.UserClass;
-
+import org.apache.tomcat.jni.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
+
 
 @Controller
 public class LoginController {
 
-	@RequestMapping("/login")
-	public String loginPage(Model model) {
-		System.out.println("jgkjgk");
-        model.addAttribute("user", new UserClass());
-		return "login";
-	}
-
-    @PostMapping("/landing")
-    public String loginSubmit(@ModelAttribute UserClass user, Model model){
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        if(user.getUsername().equals("buyer1") && user.getPassword().equals("123")){
-            model.addAttribute("user", user);
-            model.addAttribute("adv", new AdClass());
-            return "landing";
+    private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
+    @Autowired
+    private UserRepository UserRepository;
+    @PostMapping("/loginApi")
+    public ResponseEntity<?> loginSubmit(@RequestBody UserClass user) throws NoSuchAlgorithmException {
+        String password = user.getPassword();
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
+        byte[] digest = md.digest();
+        String encryptedPassword = DatatypeConverter.printHexBinary(digest).toUpperCase();
+        logger.info(user.getEmail() + " " + user.getPassword() + " " + encryptedPassword);
+        UserTable userInfo = UserRepository.findByEmailAndPassword(user.getEmail(), encryptedPassword);
+        logger.info(String.valueOf(userInfo));
+        if(userInfo != null){
+            logger.info(userInfo.getEmail());
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+        } else {
+            logger.info("Fail");
+            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
-        else{
-            return "error";
-        }
+//        if(user.getEmail().equals("buyer1@gmail.com") && user.getPassword().equals("123")){
+//            return new ResponseEntity<>("Success", HttpStatus.OK);
+//        }
+//        else{
+//            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+//        }
     }
-
 }
-//testgi
