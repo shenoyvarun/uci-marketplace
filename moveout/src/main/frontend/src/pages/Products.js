@@ -44,17 +44,17 @@ export default function EcommerceShop() {
 
         <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ProductFilterSidebar
-              isOpenFilter={openFilter}
-              onOpenFilter={handleOpenFilter}
-              onCloseFilter={handleCloseFilter}
-            />
-            <ProductSort />
+            {/*<ProductFilterSidebar*/}
+            {/*  isOpenFilter={openFilter}*/}
+            {/*  onOpenFilter={handleOpenFilter}*/}
+            {/*  onCloseFilter={handleCloseFilter}*/}
+            {/*/>*/}
+            {/*<ProductSort />*/}
           </Stack>
         </Stack>
 
-        <ProductList products={PRODUCTS} />
-        <ProductCartWidget />
+        <ProductList products={data} />
+        {/*<ProductCartWidget />*/}
       </Container>
     </Page>
   );
