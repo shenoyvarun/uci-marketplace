@@ -29,7 +29,7 @@ const HeaderStyle = styled('header')(({ theme }) => ({
     justifyContent: 'space-between',
     [theme.breakpoints.up('md')]: {
         alignItems: 'flex-start',
-        padding: theme.spacing(7, 5, 0, 7),
+        padding: theme.spacing(0, 5, 0, 7),
     },
 }));
 
@@ -49,7 +49,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    padding: theme.spacing(12, 0),
+    padding: theme.spacing(0, 0),
 }));
 
 // ----------------------------------------------------------------------
@@ -62,19 +62,9 @@ export default function Login() {
     return (
         <Page title="PostAd">
             <RootStyle>
-
-                {/*{mdUp && (*/}
-                {/*    <SectionStyle>*/}
-                {/*        <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>*/}
-                {/*            Hi, Welcome to UCI Marketplace*/}
-                {/*        </Typography>*/}
-                {/*        /!*<img src="/static/illustrations/illustration_login.png" alt="login" />*!/*/}
-                {/*    </SectionStyle>*/}
-                {/*)}*/}
-
                 <Container maxWidth="sm">
                     <ContentStyle>
-                        <Typography variant="h4" gutterBottom>
+                        <Typography variant="h3" gutterBottom>
                             Post an Ad!
                         </Typography>
 
@@ -82,14 +72,6 @@ export default function Login() {
 
                         <PostAdForm />
 
-                        {/*{!smUp && (*/}
-                        {/*    <Typography variant="body2" align="center" sx={{ mt: 3 }}>*/}
-                        {/*        Don’t have an account?{' '}*/}
-                        {/*        <Link variant="subtitle2" component={RouterLink} to="/register">*/}
-                        {/*            Get started*/}
-                        {/*        </Link>*/}
-                        {/*    </Typography>*/}
-                        {/*)}*/}
                     </ContentStyle>
                 </Container>
             </RootStyle>

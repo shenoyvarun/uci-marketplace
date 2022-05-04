@@ -4,15 +4,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 
 @RestController
-public class AddProductController {
+public class ProductController {
     private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
     @Autowired private ProductRepository productRepository;
     @PostMapping("/addProduct")
@@ -29,4 +32,11 @@ public class AddProductController {
 //        else
 //            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
     }
+
+    @GetMapping("/getAllProducts")
+    public List<ProductTable> list(){
+        return productRepository.findAll();
+    }
+
+
 }

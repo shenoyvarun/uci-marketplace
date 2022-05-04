@@ -12,6 +12,7 @@ import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
 import PostLogin from "./pages/PostLogin";
 import PostAd from './pages/PostAd';
+import Productinfo from './pages/Productinfo';
 
 // ----------------------------------------------------------------------
 
@@ -25,6 +26,8 @@ export default function Router() {
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
+        { path: 'productinfo', element: <Productinfo /> },
+        { path: 'postad', element: <PostAd />},
       ],
     },
     {
@@ -32,7 +35,6 @@ export default function Router() {
       element: <LogoOnlyLayout />,
       children: [
         { path: '/', element: <Navigate to="/login" /> },
-        { path: 'postad', element: <PostAd />},
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },
