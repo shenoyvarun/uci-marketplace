@@ -30,19 +30,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 //         height: 40
 //     }
 // });
-const styles = StyleSheet.create({
-    backgroundVideo: {
-        position: "relative",
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0
-    },
-    buttonStyle: {
-        marginHorizontal: 20,
-        marginTop: 5,
-    }
-});
 
 
 export default function Productinfo() {

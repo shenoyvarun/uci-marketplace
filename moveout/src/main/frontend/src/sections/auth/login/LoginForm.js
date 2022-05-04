@@ -40,7 +40,7 @@ export default function LoginForm() {
             }).catch((error) => {
                 console.log(error);
                 alert("Invalid Email Id / Password");
-                navigate('/register', { replace: true });
+                // navigate('/login', { replace: true });
             })
         },
     });
@@ -98,7 +98,7 @@ export default function LoginForm() {
                     </Link>
                 </Stack>
 
-                <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+                <LoadingButton fullWidth size="large" type="submit" variant="contained" >
                     Login
                 </LoadingButton>
             </Form>
