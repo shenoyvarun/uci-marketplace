@@ -21,16 +21,19 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 
 
-export default function ProductInfo() {
+export default function Productinfo() {
     let location = useLocation();
-    const {foo} = location.state;
-    console.log(location.state.foo);
+    const foo = location.state;
+    console.log(foo);
     return (
         <Page title="404 Page Not Found">
             <Container>
                 <ContentStyle sx={{ textAlign: 'center', alignItems: 'center' }}>
                     <Typography variant="h3" paragraph>
-                        Sorry, page not found!
+                        {foo.product.id} <br />
+                        {foo.product.prd_name} <br />
+                        {foo.product.prd_condition} <br />
+                        {foo.product.prd_dec} <br />
                     </Typography>
 
                     {/*<Typography sx={{ color: 'text.secondary' }}>*/}

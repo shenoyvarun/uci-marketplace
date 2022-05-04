@@ -46,7 +46,7 @@ export default function ShopProductCard({ product }) {
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Link to={{ pathname: `/productinfo/`, state: { foo: 'bar' } }} color="inherit" underline="hover" component={RouterLink}>
+        <Link to={`/productinfo`} state = {{ product }}  color="inherit" underline="hover" component={RouterLink}>
           <Typography variant="subtitle2" noWrap>
             {prd_name}
           </Typography>
