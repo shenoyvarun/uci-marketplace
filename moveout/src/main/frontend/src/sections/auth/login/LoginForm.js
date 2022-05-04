@@ -39,7 +39,7 @@ export default function LoginForm() {
                 navigate('/dashboard/products', { replace: true });
             }).catch((error) => {
                 console.log(error);
-                alert("Email is not registered.");
+                alert("Invalid Email Id / Password");
                 navigate('/register', { replace: true });
             })
         },

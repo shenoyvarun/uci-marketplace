@@ -10,46 +10,80 @@ import Page from '../components/Page';
 const ContentStyle = styled('div')(({ theme }) => ({
     maxWidth: 480,
     margin: 'auto',
-    minHeight: '100vh',
+    minHeight: '50vh',
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    padding: theme.spacing(12, 0)
+    padding: theme.spacing(0, 0)
 }));
 
 // ----------------------------------------------------------------------
-
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         flexDirection: 'row',
+//         justifyContent: 'space-between'
+//     },
+//     buttonStyle: {
+//         backgroundColor: 'blue',
+//         width: '40%',
+//         height: 40
+//     }
+// });
+const styles = StyleSheet.create({
+    backgroundVideo: {
+        position: "relative",
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0
+    },
+    buttonStyle: {
+        marginHorizontal: 20,
+        marginTop: 5,
+    }
+});
 
 
 export default function Productinfo() {
     let location = useLocation();
-    const foo = location.state;
-    console.log(foo);
+    const data = location.state;
+    const imgSrc = `/static/mock-images/products/product_${data.product.id}.jpg`;
+    console.log(data);
     return (
-        <Page title="404 Page Not Found">
+        <Page title="Product Details">
             <Container>
                 <ContentStyle sx={{ textAlign: 'center', alignItems: 'center' }}>
                     <Typography variant="h3" paragraph>
-                        {foo.product.id} <br />
-                        {foo.product.prd_name} <br />
-                        {foo.product.prd_condition} <br />
-                        {foo.product.prd_dec} <br />
+                        Details for Product Id : {data.product.id} <br />
                     </Typography>
-
-                    {/*<Typography sx={{ color: 'text.secondary' }}>*/}
-                    {/*  Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve mistyped the URL? Be*/}
-                    {/*  sure to check your spelling.*/}
-                    {/*</Typography>*/}
-
                     <Box
                         component="img"
-                        src="/static/illustrations/illustration_404.svg"
-                        sx={{ height: 260, mx: 'auto', my: { xs: 5, sm: 10 } }}
+                        src={imgSrc}
+                        sx={{ height: 250, mx: 'auto', my: { xs: 5, sm: 2 } }}
                     />
+                    <Typography variant="p" paragraph>
+                        <br />
+                    </Typography>
+                    <Typography variant="h3" paragraph>
+                        <u>Product : {data.product.prd_name}</u> <br />
+                    </Typography>
+                    <Typography variant="h4" paragraph>
+                        Product Category : {data.product.prd_type} <br />
+                    </Typography>
+                    <Typography variant="h4" paragraph>
+                        Condition : {data.product.prd_condition} <br />
+                    </Typography>
+                    <Typography variant="h4" paragraph>
+                        Price : ${data.product.prd_price} <br />
+                    </Typography>
+                    <Typography variant="p" paragraph>
+                        <b>Description :</b> <i>{data.product.prd_dec}</i> <br />
+                    </Typography>
 
-                    {/*<Button to="/" size="large" variant="contained" component={RouterLink}>*/}
-                    {/*  Go to Home*/}
-                    {/*</Button>*/}
+                    <Button to="/404" size="large" variant="contained" component={RouterLink}>
+                      Get Seller Details
+                    </Button>
                 </ContentStyle>
             </Container>
         </Page>

@@ -18,8 +18,13 @@ const navConfig = [
   },
   {
     title: 'Post Ad',
-    path: '/postad',
-    icon: getIcon('eva:alert-triangle-fill'),
+    path: '/dashboard/postad',
+    icon: getIcon('eva:file-add-fill'),
+  },
+  {
+    title: 'Log out',
+    path: '/login',
+    icon: getIcon('eva:log-in-fill'),
   },
 ];
 

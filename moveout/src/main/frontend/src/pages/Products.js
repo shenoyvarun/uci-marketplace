@@ -5,7 +5,6 @@ import { Container, Stack, Typography } from '@mui/material';
 import Page from '../components/Page';
 import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../sections/@dashboard/products';
 // mock
-import PRODUCTS from '../_mock/products';
 import axios from "axios";
 import {GET_PRODUCTS} from "../api-config";
 

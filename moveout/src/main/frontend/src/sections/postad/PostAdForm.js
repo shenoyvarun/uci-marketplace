@@ -14,17 +14,17 @@ import {ADD_PRODUCT} from "../../api-config";
 // ----------------------------------------------------------------------
 
 const categories = [
-    {value: 'furniture', label: 'Furniture',},
-    {value: 'kitchen', label: 'Kitchen Supplies',},
-    {value: 'electronics', label: 'Electronics',},
-    {value: 'clothes', label: 'Clothes',},
+    {value: 'Furniture', label: 'Furniture',},
+    {value: 'Kitchen Supplies', label: 'Kitchen Supplies',},
+    {value: 'Electronics', label: 'Electronics',},
+    {value: 'Apparel', label: 'Apparel',},
 ];
 
 const condition = [
-    {value: 'new', label: 'New',},
-    {value: 'used_lnew', label: 'Used - like new',},
-    {value: 'used_good', label: 'Used - good',},
-    {value: 'used_fair', label: 'Used - fair',},
+    {value: 'New', label: 'New',},
+    {value: 'Used - Like New', label: 'Used - like new',},
+    {value: 'Used - Good', label: 'Used - good',},
+    {value: 'Used - Fair', label: 'Used - fair',},
 ];
 
 export default function PostAdForm() {
@@ -50,7 +50,8 @@ export default function PostAdForm() {
             console.log("Passing Registration Details to Backend ", values);
             axios.post(ADD_PRODUCT, values).then((response) => {
                 console.log(response);
-                navigate('/postlogin', { replace: true });
+                alert("Your Product has been Successfully Posted !");
+                navigate('/dashboard/products', { replace: true });
             }).catch((error) => {
                 console.log(error);
                 navigate('/404', { replace: true });
