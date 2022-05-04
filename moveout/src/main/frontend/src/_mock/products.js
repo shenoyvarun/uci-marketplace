@@ -1,10 +1,13 @@
 import { faker } from '@faker-js/faker';
 import { sample } from 'lodash';
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {GET_PRODUCTS} from "../api-config";
 
 // ----------------------------------------------------------------------
 
 const PRODUCT_NAME = [
-  'Nike Air Force 1 NDESTRUKT',
+  'Shirt',
   'Nike Space Hippie 04',
   'Nike Air Zoom Pegasus 37 A.I.R. Chaz Bear',
   'Nike Blazer Low 77 Vintage',

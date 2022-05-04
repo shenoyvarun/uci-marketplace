@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // material
 import { Container, Stack, Typography } from '@mui/material';
 // components
@@ -6,10 +6,25 @@ import Page from '../components/Page';
 import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../sections/@dashboard/products';
 // mock
 import PRODUCTS from '../_mock/products';
+import axios from "axios";
+import {GET_PRODUCTS} from "../api-config";
 
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
+
+  const[data, setData] = useState([]);
+  useEffect(() =>{
+    axios.get(GET_PRODUCTS)
+        .then(res => {
+          setData(res.data);
+          console.log(res.data[0]);
+          console.log(res.data.map(info =>(
+              info.prd_name
+          )));
+        })
+  }, []);
+
   const [openFilter, setOpenFilter] = useState(false);
 
   const handleOpenFilter = () => {
@@ -29,17 +44,17 @@ export default function EcommerceShop() {
 
         <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ProductFilterSidebar
-              isOpenFilter={openFilter}
-              onOpenFilter={handleOpenFilter}
-              onCloseFilter={handleCloseFilter}
-            />
-            <ProductSort />
+            {/*<ProductFilterSidebar*/}
+            {/*  isOpenFilter={openFilter}*/}
+            {/*  onOpenFilter={handleOpenFilter}*/}
+            {/*  onCloseFilter={handleCloseFilter}*/}
+            {/*/>*/}
+            {/*<ProductSort />*/}
           </Stack>
         </Stack>
 
-        <ProductList products={PRODUCTS} />
-        <ProductCartWidget />
+        <ProductList products={data} />
+        {/*<ProductCartWidget />*/}
       </Container>
     </Page>
   );

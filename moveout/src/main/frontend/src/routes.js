@@ -12,6 +12,7 @@ import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
 import PostLogin from "./pages/PostLogin";
 import PostAd from './pages/PostAd';
+import Productinfo from './pages/Productinfo';
 
 // ----------------------------------------------------------------------
 
@@ -38,6 +39,7 @@ export default function Router() {
         { path: '404', element: <NotFound /> },
         { path: '*', element: <Navigate to="/404" /> },
         { path: 'postlogin', element: <PostLogin /> },
+        { path: 'productinfo', element: <Productinfo /> },
       ],
     },
     { path: '*', element: <Navigate to="/404" replace /> },

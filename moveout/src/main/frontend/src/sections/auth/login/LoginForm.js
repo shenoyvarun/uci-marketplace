@@ -36,10 +36,11 @@ export default function LoginForm() {
             console.log("Passing to Backend ", values);
             axios.post(LOGIN_USER, values).then((response) => {
                 console.log(response);
-                navigate('/postad', { replace: true });
+                navigate('/dashboard/products', { replace: true });
             }).catch((error) => {
                 console.log(error);
-                navigate('/404', { replace: true });
+                alert("Email is not registered.");
+                navigate('/register', { replace: true });
             })
         },
     });

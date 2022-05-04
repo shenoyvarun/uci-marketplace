@@ -10,6 +10,9 @@ import Logo from '../components/Logo';
 // sections
 import { LoginForm } from '../sections/auth/login';
 import AuthSocial from '../sections/auth/AuthSocial';
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {GET_PRODUCTS} from "../api-config";
 
 // ----------------------------------------------------------------------
 
@@ -56,7 +59,22 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
+
+
+
+
 export default function PostLogin() {
+    const[data, setData] = useState([]);
+    useEffect(() =>{
+        axios.get(GET_PRODUCTS)
+            .then(res => {
+                setData(res.data);
+                console.log(res.data[0].prd_name);
+                console.log(res.data.map(info =>(
+                    info.prd_name
+                )));
+            })
+    }, []);
     const smUp = useResponsive('up', 'sm');
     const mdUp = useResponsive('up', 'md');
 
@@ -65,9 +83,12 @@ export default function PostLogin() {
             <RootStyle>
 
                 {mdUp && (
+
+
                     <SectionStyle>
                         <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-                            Hi, Welcome to UCI Marketplace
+                            Hi
+
                         </Typography>
                         {/*<img src="/static/illustrations/illustration_login.png" alt="login" />*/}
                     </SectionStyle>
@@ -75,7 +96,12 @@ export default function PostLogin() {
                 <Container maxWidth="sm">
                     <ContentStyle>
                         <Typography variant="h4" gutterBottom>
-                            Logged in Successfully !
+                            {
+                                data.map(info =>
+
+                                    <l1 key = {info.prd_name}> {info.prd_name}</l1>
+                                )
+                            }
                         </Typography>
                     </ContentStyle>
                 </Container>
