@@ -1,4 +1,5 @@
-CREATE TABLE IF NOT EXISTS move_out_sale.product_table(
+DROP TABLE IF EXISTS move_out_sale.product_table;
+CREATE TABLE move_out_sale.product_table(
     id INTEGER AUTO_INCREMENT,
     prd_name VARCHAR(100) NOT NULL,
     prd_price VARCHAR(100) NOT NULL,
@@ -6,10 +7,12 @@ CREATE TABLE IF NOT EXISTS move_out_sale.product_table(
     prd_condition VARCHAR(100) NOT NULL,
     prd_dec VARCHAR(300) NOT NULL,
     user_id INTEGER,
-    image LONGBLOB,
+    prd_image VARCHAR(300) NOT NULL,
     PRIMARY KEY(id)
 );
-CREATE TABLE IF NOT EXISTS move_out_sale.user_table
+
+DROP TABLE IF EXISTS move_out_sale.user_table;
+CREATE TABLE move_out_sale.user_table
 (
     id INTEGER AUTO_INCREMENT,
     first_name VARCHAR(200) NOT NULL,

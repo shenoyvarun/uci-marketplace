@@ -17,25 +17,10 @@ const ContentStyle = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 0)
 }));
 
-// ----------------------------------------------------------------------
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         flexDirection: 'row',
-//         justifyContent: 'space-between'
-//     },
-//     buttonStyle: {
-//         backgroundColor: 'blue',
-//         width: '40%',
-//         height: 40
-//     }
-// });
-
-
 export default function Productinfo() {
     let location = useLocation();
     const data = location.state;
-    const imgSrc = `/static/mock-images/products/product_${data.product.id}.jpg`;
+    const imgSrc = `/static/mock-images/products/product_${data.product.prd_image}`;
     console.log(data);
     return (
         <Page title="Product Details">
