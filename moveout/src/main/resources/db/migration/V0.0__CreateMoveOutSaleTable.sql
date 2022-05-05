@@ -1,4 +1,4 @@
-DROP TABLE move_out_sale.product_table;
+DROP TABLE IF EXISTS move_out_sale.product_table;
 CREATE TABLE move_out_sale.product_table(
     id INTEGER AUTO_INCREMENT,
     prd_name VARCHAR(100) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE move_out_sale.product_table(
     PRIMARY KEY(id)
 );
 
-DROP TABLE move_out_sale.user_table;
+DROP TABLE IF EXISTS move_out_sale.user_table;
 CREATE TABLE move_out_sale.user_table
 (
     id INTEGER AUTO_INCREMENT,
