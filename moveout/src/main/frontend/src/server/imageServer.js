@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
         cb(null, '../../public/static/mock-images/products')
     },
     filename: (req, file, cb) => {
-        cb(null, 'Product_' + file.originalname)
+        cb(null, 'Product_' + file.originalname);
     }
 });
 

@@ -63,43 +63,6 @@ export default function PostAdForm() {
 
     const { errors, touched, handleSubmit, getFieldProps, isSubmitting } = formik;
 
-    // console.log(formik.values);
-    // const multer = require('multer');
-    // const storage = multer.diskStorage({
-    //    destination: function(req, file, cb){
-    //        cb(null, '/');
-    //    },
-    //     filename: function(req, file, cb){
-    //        cb(null, file.filename);
-    //     }
-    // });
-    //
-    // const upload = multer({
-    //     storage: storage,
-    //     fileFilter: fileFilter1
-    // });
-    //
-    // const fileFilter1 = (req, file, cb) => {
-    //   if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
-    //       cb(null, true);
-    //   }  else{
-    //       cb(null,false);
-    //   }
-    // };
-    // const state = {
-    //     selectedFile: null
-    // };
-
-    // const onFileChange = event => {
-    //     this.setState({ selectedFile: event.target.files[0] });
-    // };
-    // const onUpload = () => {
-    //     axios.post('http://localhost:3000/public/static/mock-images/products/', formik.values.prdImage).then((response) => {
-    //         console.log(response);
-    //     }).catch((error) => {
-    //         console.log(error);
-    //     })
-    // };
     const [files, setFiles] = useState([]);
 
     const onInputChange = (e) => {
@@ -115,12 +78,13 @@ export default function PostAdForm() {
         data.append('file', files[0]);
         formik.values.prdImage = files[0].name;
         console.log(formik.values.prdImage);
-        axios.post('//localhost:8000/upload', data)
+
+        axios.post('http://localhost:8000/upload', data)
             .then((response) => {
-                console.log('File uploaded' + data)
+                alert("File has been sucessfully uploaded");
             })
             .catch((e) => {
-                console.log('Upload Error')
+                console.log('Upload Error: ' + e)
             })
     };
 
