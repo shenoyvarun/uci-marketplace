@@ -7,6 +7,7 @@ public class ProductClass {
     private String prdCondition;
     private String prdDec;
     private String userId;
+    private String prdImage;
 
     public String getPrdName() {
         return prdName;
@@ -55,4 +56,8 @@ public class ProductClass {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    public String getPrdImage() { return prdImage; }
+
+    public void setPrdImage(String prdImage) { this.prdImage = prdImage; }
 }

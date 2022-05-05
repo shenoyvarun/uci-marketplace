@@ -26,7 +26,7 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { id, prd_condition, prd_dec, prd_name, prd_price, prd_type } = product;
+  const { id, prd_condition, prd_dec, prd_name, prd_price, prd_type, prd_image } = product;
 
   return (
     <Card>
@@ -42,7 +42,7 @@ export default function ShopProductCard({ product }) {
             }}
           >
           </Label>
-        <ProductImgStyle alt={prd_name} src={`/static/mock-images/products/product_${id}.jpg`} />
+        <ProductImgStyle alt={prd_name} src={`/static/mock-images/products/Product_${prd_image}`} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>

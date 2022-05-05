@@ -18,17 +18,19 @@ public class ProductTable {
     private String prd_type;
     private String prd_condition;
     private String prd_dec;
+    private String prd_image;
 
     public ProductTable() {
     }
 
-    public ProductTable(int id, String prd_name, String prd_price, String prd_type, String prd_condition, String prd_dec) {
+    public ProductTable(int id, String prd_name, String prd_price, String prd_type, String prd_condition, String prd_dec, String prd_image) {
         this.id = id;
         this.prd_name = prd_name;
         this.prd_price = prd_price;
         this.prd_type = prd_type;
         this.prd_condition = prd_condition;
         this.prd_dec = prd_dec;
+        this.prd_image = prd_image;
     }
 
     @Id
@@ -77,7 +79,11 @@ public class ProductTable {
         return prd_dec;
     }
 
-    public void setPrd_dec(String prd_dec) {
-        this.prd_dec = prd_dec;
+    public void setPrd_dec(String prd_dec) { this.prd_dec = prd_dec; }
+
+    public String getPrd_image() {
+        return prd_image;
     }
+
+    public void setPrd_image(String prd_image) { this.prd_image = prd_image; }
 }

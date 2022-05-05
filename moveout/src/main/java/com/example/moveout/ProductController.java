@@ -27,6 +27,7 @@ public class ProductController {
         values.setPrd_type(product.getPrdType());
         values.setPrd_condition(product.getPrdCondition());
         values.setPrd_dec(product.getPrdDec());
+        values.setPrd_image(product.getPrdImage());
         productRepository.save(values);
         return new ResponseEntity<>(product, HttpStatus.OK);
 //        else

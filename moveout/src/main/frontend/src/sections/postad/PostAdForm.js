@@ -2,8 +2,9 @@ import * as Yup from 'yup';
 import * as React from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
 // material
-import { Stack, TextField, MenuItem, InputAdornment } from '@mui/material';
+import { Stack, TextField, MenuItem, InputAdornment, Button, Input } from '@mui/material';
 
+import {useState} from 'react';
 // component
 import {LoadingButton} from "@mui/lab";
 import {useNavigate} from "react-router-dom";
@@ -43,7 +44,8 @@ export default function PostAdForm() {
             prdPrice:'',
             prdType: '',
             prdCondition: '',
-            prdDec: ''
+            prdDec: '',
+            prdImage: ''
         },
         validationSchema: ProductDetailsValidation,
         onSubmit: ( values) => {
@@ -60,6 +62,67 @@ export default function PostAdForm() {
     });
 
     const { errors, touched, handleSubmit, getFieldProps, isSubmitting } = formik;
+
+    // console.log(formik.values);
+    // const multer = require('multer');
+    // const storage = multer.diskStorage({
+    //    destination: function(req, file, cb){
+    //        cb(null, '/');
+    //    },
+    //     filename: function(req, file, cb){
+    //        cb(null, file.filename);
+    //     }
+    // });
+    //
+    // const upload = multer({
+    //     storage: storage,
+    //     fileFilter: fileFilter1
+    // });
+    //
+    // const fileFilter1 = (req, file, cb) => {
+    //   if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
+    //       cb(null, true);
+    //   }  else{
+    //       cb(null,false);
+    //   }
+    // };
+    // const state = {
+    //     selectedFile: null
+    // };
+
+    // const onFileChange = event => {
+    //     this.setState({ selectedFile: event.target.files[0] });
+    // };
+    // const onUpload = () => {
+    //     axios.post('http://localhost:3000/public/static/mock-images/products/', formik.values.prdImage).then((response) => {
+    //         console.log(response);
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     })
+    // };
+    const [files, setFiles] = useState([]);
+
+    const onInputChange = (e) => {
+        console.log(e.target.files)
+        setFiles(e.target.files)
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        const data = new FormData();
+
+        data.append('file', files[0]);
+        formik.values.prdImage = files[0].name;
+        console.log(formik.values.prdImage);
+        axios.post('//localhost:8000/upload', data)
+            .then((response) => {
+                console.log('File uploaded' + data)
+            })
+            .catch((e) => {
+                console.log('Upload Error')
+            })
+    };
 
     return (
         <FormikProvider value={formik}>
@@ -148,6 +211,14 @@ export default function PostAdForm() {
                         error={Boolean(touched.prdDec && errors.prdDec)}
                         helperText={touched.prdDec && errors.prdDec}
                     />
+
+                    <Input type="file"
+                           onChange={onInputChange}
+
+                           multiple/>
+
+                    <Button size="small" variant="contained" onClick={onSubmit}>Upload Image</Button>
+
 
                     <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
                         Publish!

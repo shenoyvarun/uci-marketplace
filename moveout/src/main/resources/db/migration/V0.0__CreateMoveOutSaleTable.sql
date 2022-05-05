@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS move_out_sale.product_table(
     prd_condition VARCHAR(100) NOT NULL,
     prd_dec VARCHAR(300) NOT NULL,
     user_id INTEGER,
-    image LONGBLOB,
+    prd_image VARCHAR(300) NOT NULL,
     PRIMARY KEY(id)
 );
 CREATE TABLE IF NOT EXISTS move_out_sale.user_table
