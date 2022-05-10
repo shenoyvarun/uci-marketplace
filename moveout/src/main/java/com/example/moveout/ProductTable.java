@@ -19,11 +19,12 @@ public class ProductTable {
     private String prd_condition;
     private String prd_dec;
     private String prd_image;
+    private String user_id;
 
     public ProductTable() {
     }
 
-    public ProductTable(int id, String prd_name, String prd_price, String prd_type, String prd_condition, String prd_dec, String prd_image) {
+    public ProductTable(int id, String prd_name, String prd_price, String prd_type, String prd_condition, String prd_dec, String prd_image, String user_id) {
         this.id = id;
         this.prd_name = prd_name;
         this.prd_price = prd_price;
@@ -86,4 +87,8 @@ public class ProductTable {
     }
 
     public void setPrd_image(String prd_image) { this.prd_image = prd_image; }
+
+    public String getUser_id() { return user_id; }
+
+    public void setUser_id(String user_id) { this.user_id = user_id; }
 }
