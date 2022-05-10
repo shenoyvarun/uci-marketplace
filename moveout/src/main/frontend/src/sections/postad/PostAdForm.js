@@ -32,7 +32,7 @@ export default function PostAdForm() {
     const navigate = useNavigate();
 
     const ProductDetailsValidation = Yup.object().shape({
-        prdName: Yup.string().required('Required'),
+        prdname: Yup.string().required('Required'),
         prdType: Yup.string().required('Required'),
         prdCondition: Yup.string().required('Required'),
         prdPrice: Yup.number().required('Numeric input required'),
@@ -40,7 +40,7 @@ export default function PostAdForm() {
 
     const formik = useFormik({
         initialValues: {
-            prdName: '',
+            prdname: '',
             prdPrice:'',
             prdType: '',
             prdCondition: '',
@@ -99,11 +99,11 @@ export default function PostAdForm() {
                         type = "text"
                         label="Product Name"
                         onChange={formik.handleChange}
-                        value={formik.values.prdName}
+                        value={formik.values.prdname}
                         variant="filled"
-                        {...getFieldProps('prdName')}
-                        error={Boolean(touched.prdName && errors.prdName)}
-                        helperText={touched.prdName && errors.prdName}
+                        {...getFieldProps('prdname')}
+                        error={Boolean(touched.prdname && errors.prdname)}
+                        helperText={touched.prdname && errors.prdname}
                     />
                     <TextField
                         fullWidth
@@ -112,7 +112,7 @@ export default function PostAdForm() {
                         type = "number"
                         label="Price"
                         onChange={formik.handleChange}
-                        value={formik.values.prdName}
+                        value={formik.values.prdname}
                         variant="filled"
                         startAdornment={<InputAdornment position="start">$</InputAdornment>}
                         {...getFieldProps('prdPrice')}

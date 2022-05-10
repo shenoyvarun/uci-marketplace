@@ -19,7 +19,7 @@ export default function EcommerceShop() {
           setData(res.data);
           console.log(res.data[0]);
           console.log(res.data.map(info =>(
-              info.prd_name
+              info.prdname
           )));
         })
   }, []);

@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface ProductRepository extends CrudRepository<ProductTable, Integer> {
     List<ProductTable> findAll();
+
+    List<ProductTable> findByprdname(String name);
 }

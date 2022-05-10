@@ -1,7 +1,7 @@
 package com.example.moveout;
 
 public class ProductClass {
-    private String prdName;
+    private String prdname;
     private String prdPrice;
     private String prdType;
     private String prdCondition;
@@ -9,12 +9,12 @@ public class ProductClass {
     private String userId;
     private String prdImage;
 
-    public String getPrdName() {
-        return prdName;
+    public String getprdname() {
+        return prdname;
     }
 
-    public void setPrdName(String prdName) {
-        this.prdName = prdName;
+    public void setprdname(String prdname) {
+        this.prdname = prdname;
     }
 
     public String getPrdPrice() {

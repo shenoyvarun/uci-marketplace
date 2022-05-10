@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import React from "react";
+import axios from "axios";
 // material
 import { styled, alpha } from '@mui/material/styles';
 import { Input, Slide, Button, IconButton, InputAdornment, ClickAwayListener } from '@mui/material';
 // component
 import Iconify from '../../components/Iconify';
+import {GET_PRODUCTS_BY_NAME} from "../../api-config";
 
 // ----------------------------------------------------------------------
 
@@ -35,6 +38,7 @@ const SearchbarStyle = styled('div')(({ theme }) => ({
 export default function Searchbar() {
   const [isOpen, setOpen] = useState(false);
 
+  const [formValue, setFormValue] = useState('');
   const handleOpen = () => {
     setOpen((prev) => !prev);
   };
@@ -42,6 +46,18 @@ export default function Searchbar() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleSubmit = () => {
+    setOpen(false);
+    const values = formValue
+    console.log(values);
+    axios.post(GET_PRODUCTS_BY_NAME, values).then((response) => {
+      console.log(response);
+
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
 
   return (
     <ClickAwayListener onClickAway={handleClose}>
@@ -55,6 +71,8 @@ export default function Searchbar() {
         <Slide direction="down" in={isOpen} mountOnEnter unmountOnExit>
           <SearchbarStyle>
             <Input
+                value={formValue}
+                onChange={e => setFormValue(e.target.value)}
               autoFocus
               fullWidth
               disableUnderline
@@ -66,7 +84,7 @@ export default function Searchbar() {
               }
               sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
             />
-            <Button variant="contained" onClick={handleClose}>
+            <Button variant="contained" onClick={handleSubmit}>
               Search
             </Button>
           </SearchbarStyle>
