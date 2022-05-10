@@ -15,10 +15,10 @@ DROP TABLE IF EXISTS move_out_sale.user_table;
 CREATE TABLE move_out_sale.user_table
 (
     id INTEGER AUTO_INCREMENT,
-    firstname VARCHAR(200) NOT NULL,
-    lastname VARCHAR(200) NOT NULL,
+    first_name VARCHAR(200) NOT NULL,
+    last_name VARCHAR(200) NOT NULL,
     email VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL,
-    phone VARCHAR(20),
+    phone_number VARCHAR(20),
     PRIMARY KEY(id)
 );
