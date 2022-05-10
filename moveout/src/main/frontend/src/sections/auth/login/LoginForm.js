@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
 import {LOGIN_USER} from "../../../api-config";
+import {UserContext} from "../../../userContext";
 // ----------------------------------------------------------------------
 
 const headers = {
@@ -16,8 +17,11 @@ const headers = {
 }
 
 export default function LoginForm() {
-    const navigate = useNavigate();
 
+    const { user, setUser } = useContext(UserContext);
+    console.log("Current User: " + user);
+
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
 
     const LoginSchema = Yup.object().shape({
@@ -37,6 +41,8 @@ export default function LoginForm() {
             axios.post(LOGIN_USER, values).then((response) => {
                 console.log(response);
                 navigate('/dashboard/products', { replace: true });
+                setUser(formik.values.email);
+                console.log("User on login page: " + user);
             }).catch((error) => {
                 console.log(error);
                 alert("Invalid Email Id / Password");
@@ -53,6 +59,7 @@ export default function LoginForm() {
 
 
     return (
+
         <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <Stack spacing={3}>
