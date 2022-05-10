@@ -6,7 +6,7 @@ CREATE TABLE move_out_sale.product_table(
     prdtype VARCHAR(100) NOT NULL,
     prdcondition VARCHAR(100) NOT NULL,
     prddec VARCHAR(300) NOT NULL,
-    userid INTEGER,
+    userid VARCHAR(100) NOT NULL,
     prdimage VARCHAR(300) NOT NULL,
     PRIMARY KEY(id)
 );
