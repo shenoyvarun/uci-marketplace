@@ -19,7 +19,6 @@ public class ProductTable {
     private String prdcondition;
     private String prddec;
     private String prdimage;
-
     public ProductTable() {
     }
 
