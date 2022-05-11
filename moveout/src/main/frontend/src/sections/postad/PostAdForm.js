@@ -1,10 +1,9 @@
 import * as Yup from 'yup';
 import * as React from 'react';
-import { useFormik, Form, FormikProvider } from 'formik';
-// material
-import { Stack, TextField, MenuItem, InputAdornment, Input } from '@mui/material';
-
 import {useContext, useState} from 'react';
+import {Form, FormikProvider, useFormik} from 'formik';
+// material
+import {Input, InputAdornment, MenuItem, Stack, TextField} from '@mui/material';
 // component
 import {LoadingButton} from "@mui/lab";
 import {useNavigate} from "react-router-dom";
@@ -30,8 +29,10 @@ const condition = [
 
 export default function PostAdForm() {
 
-    const { user } = useContext(UserContext);
+    const { userInfo, productInfo } = useContext(UserContext);
+    const [user, setUser] = userInfo;
     const userEmailId = user;
+    console.log(productInfo);
     console.log("Current User (post ad page):" + userEmailId);
 
     const navigate = useNavigate();
