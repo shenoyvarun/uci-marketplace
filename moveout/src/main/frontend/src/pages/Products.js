@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useContext} from 'react';
 // material
 import { Container, Stack, Typography } from '@mui/material';
 // components
@@ -7,19 +7,21 @@ import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } fro
 // mock
 import axios from "axios";
 import {GET_PRODUCTS} from "../api-config";
+import {UserContext} from "../userContext";
 
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
 
-  const[data, setData] = useState([]);
+    const { userInfo, productInfo } = useContext(UserContext);
+    const [prodInfo, setprodInfo] = productInfo;
   useEffect(() =>{
     axios.get(GET_PRODUCTS)
         .then(res => {
-          setData(res.data);
-          console.log(res.data[0]);
+          setprodInfo(res.data);
+          console.log(res.data);
           console.log(res.data.map(info =>(
-              info.prd_name
+              info.prdname
           )));
         })
   }, []);
@@ -33,6 +35,8 @@ export default function EcommerceShop() {
   const handleCloseFilter = () => {
     setOpenFilter(false);
   };
+
+
 
   return (
     <Page title="Dashboard: Products">
@@ -52,7 +56,7 @@ export default function EcommerceShop() {
           </Stack>
         </Stack>
 
-        <ProductList products={data} />
+        <ProductList products={prodInfo} />
         {/*<ProductCartWidget />*/}
       </Container>
     </Page>

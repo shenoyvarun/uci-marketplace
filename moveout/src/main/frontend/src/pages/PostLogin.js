@@ -69,9 +69,9 @@ export default function PostLogin() {
         axios.get(GET_PRODUCTS)
             .then(res => {
                 setData(res.data);
-                console.log(res.data[0].prd_name);
+                console.log(res.data[0].prdname);
                 console.log(res.data.map(info =>(
-                    info.prd_name
+                    info.prdname
                 )));
             })
     }, []);
@@ -99,7 +99,7 @@ export default function PostLogin() {
                             {
                                 data.map(info =>
 
-                                    <l1 key = {info.prd_name}> {info.prd_name}</l1>
+                                    <l1 key = {info.prdname}> {info.prdname}</l1>
                                 )
                             }
                         </Typography>

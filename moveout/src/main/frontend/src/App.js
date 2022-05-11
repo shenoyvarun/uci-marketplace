@@ -5,15 +5,17 @@ import ThemeProvider from './theme';
 // components
 import ScrollToTop from './components/ScrollToTop';
 import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
-
+import {UserContext, UserContextProvider} from "./userContext";
 // ----------------------------------------------------------------------
 
-export default function App() {
-  return (
+export default function App(factory, deps) {
+    return (
     <ThemeProvider>
       <ScrollToTop />
       <BaseOptionChartStyle />
-      <Router />
+        <UserContextProvider>
+            <Router />
+        </UserContextProvider>
     </ThemeProvider>
   );
 }

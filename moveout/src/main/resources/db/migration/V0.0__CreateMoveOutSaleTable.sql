@@ -1,13 +1,13 @@
 DROP TABLE IF EXISTS move_out_sale.product_table;
 CREATE TABLE move_out_sale.product_table(
     id INTEGER AUTO_INCREMENT,
-    prd_name VARCHAR(100) NOT NULL,
-    prd_price VARCHAR(100) NOT NULL,
-    prd_type VARCHAR(100) NOT NULL,
-    prd_condition VARCHAR(100) NOT NULL,
-    prd_dec VARCHAR(300) NOT NULL,
-    user_id INTEGER,
-    prd_image VARCHAR(300) NOT NULL,
+    prdname VARCHAR(100) NOT NULL,
+    prdprice VARCHAR(100) NOT NULL,
+    prdtype VARCHAR(100) NOT NULL,
+    prdcondition VARCHAR(100) NOT NULL,
+    prddec VARCHAR(300) NOT NULL,
+    userid VARCHAR(100) NOT NULL,
+    prdimage VARCHAR(300) NOT NULL,
     PRIMARY KEY(id)
 );
 

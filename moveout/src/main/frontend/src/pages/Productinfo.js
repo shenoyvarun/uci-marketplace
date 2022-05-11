@@ -20,7 +20,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Productinfo() {
     let location = useLocation();
     const data = location.state;
-    const imgSrc = `/static/mock-images/products/product_${data.product.prd_image}`;
+    const imgSrc = `/static/mock-images/products/product_${data.product.prdimage}`;
     console.log(data);
     return (
         <Page title="Product Details">
@@ -38,19 +38,19 @@ export default function Productinfo() {
                         <br />
                     </Typography>
                     <Typography variant="h3" paragraph>
-                        <u>Product : {data.product.prd_name}</u> <br />
+                        <u>Product : {data.product.prdname}</u> <br />
                     </Typography>
                     <Typography variant="h4" paragraph>
-                        Product Category : {data.product.prd_type} <br />
+                        Product Category : {data.product.prdtype} <br />
                     </Typography>
                     <Typography variant="h4" paragraph>
-                        Condition : {data.product.prd_condition} <br />
+                        Condition : {data.product.prdcondition} <br />
                     </Typography>
                     <Typography variant="h4" paragraph>
-                        Price : ${data.product.prd_price} <br />
+                        Price : ${data.product.prdprice} <br />
                     </Typography>
                     <Typography variant="p" paragraph>
-                        <b>Description :</b> <i>{data.product.prd_dec}</i> <br />
+                        <b>Description :</b> <i>{data.product.prddec}</i> <br />
                     </Typography>
 
                     <Button to="/404" size="large" variant="contained" component={RouterLink}>

@@ -26,29 +26,18 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { id, prd_condition, prd_dec, prd_name, prd_price, prd_type, prd_image } = product;
+  const { id, prdcondition, prddec, prdname, prdprice, prdtype, prdimage } = product;
 
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-          <Label
-            variant="filled"
-            sx={{
-              zIndex: 9,
-              top: 16,
-              right: 16,
-              position: 'absolute',
-              textTransform: 'uppercase',
-            }}
-          >
-          </Label>
-        <ProductImgStyle alt={prd_name} src={`/static/mock-images/products/Product_${prd_image}`} />
+        <ProductImgStyle alt={prdname} src={`/static/mock-images/products/Product_${prdimage}`} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link to={`/dashboard/productinfo`} state = {{ product }}  color="inherit" underline="hover" component={RouterLink}>
           <Typography variant="subtitle2" noWrap>
-            {prd_name}
+            {prdname}
           </Typography>
         </Link>
 
@@ -63,10 +52,10 @@ export default function ShopProductCard({ product }) {
             {/*    textDecoration: 'line-through',*/}
             {/*  }}*/}
             {/*>*/}
-            {/*  {prd_price && fCurrency(prd_price)}*/}
+            {/*  {prdprice && fCurrency(prdprice)}*/}
             {/*</Typography>*/}
             &nbsp;
-            {fCurrency(prd_price)}
+            {fCurrency(prdprice)}
           </Typography>
         </Stack>
       </Stack>
