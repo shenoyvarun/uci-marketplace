@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useContext, useState} from 'react';
 import React from "react";
 import axios from "axios";
 // material
@@ -7,6 +7,7 @@ import { Input, Slide, Button, IconButton, InputAdornment, ClickAwayListener } f
 // component
 import Iconify from '../../components/Iconify';
 import {GET_PRODUCTS_BY_NAME} from "../../api-config";
+import {UserContext} from "../../userContext";
 
 // ----------------------------------------------------------------------
 
@@ -47,13 +48,16 @@ export default function Searchbar() {
     setOpen(false);
   };
 
+  const { valueInfo, productInfo } = useContext(UserContext);
+  const [prodInfo, setprodInfo] = productInfo;
   const handleSubmit = () => {
     setOpen(false);
     const values = formValue
     console.log(values);
     axios.post(GET_PRODUCTS_BY_NAME, values).then((response) => {
       console.log(response);
-
+      setprodInfo(response.data);
+      console.log(productInfo);
     }).catch((error) => {
       console.log(error);
     })

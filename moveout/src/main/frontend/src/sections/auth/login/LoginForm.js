@@ -18,8 +18,9 @@ const headers = {
 
 export default function LoginForm() {
 
-    const { user, setUser } = useContext(UserContext);
-    console.log("Current User: " + user);
+    const { userInfo, productInfo } = useContext(UserContext);
+    const [user, setUser] = userInfo;
+    console.log("Current User: " + userInfo);
 
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
@@ -42,7 +43,7 @@ export default function LoginForm() {
                 console.log(response);
                 navigate('/dashboard/products', { replace: true });
                 setUser(formik.values.email);
-                console.log("User on login page: " + user);
+                console.log("User on login page: " + userInfo);
             }).catch((error) => {
                 console.log(error);
                 alert("Invalid Email Id / Password");

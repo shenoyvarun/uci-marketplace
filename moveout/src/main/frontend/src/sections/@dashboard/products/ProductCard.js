@@ -31,17 +31,6 @@ export default function ShopProductCard({ product }) {
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-          <Label
-            variant="filled"
-            sx={{
-              zIndex: 9,
-              top: 16,
-              right: 16,
-              position: 'absolute',
-              textTransform: 'uppercase',
-            }}
-          >
-          </Label>
         <ProductImgStyle alt={prdname} src={`/static/mock-images/products/Product_${prdimage}`} />
       </Box>
 
