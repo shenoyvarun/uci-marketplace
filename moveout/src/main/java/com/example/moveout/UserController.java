@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired private UserRepository userRepository;
-    @PostMapping("/findUserByEmail")
+    @PostMapping("/getSellerDetails")
     public UserTable getSellerDetails(@RequestBody ProductTable product) {
         String sellerEmail = product.getuserid();
         logger.info("Seller Details required for email id: " + sellerEmail);
