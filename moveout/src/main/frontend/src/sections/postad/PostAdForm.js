@@ -32,7 +32,7 @@ export default function PostAdForm() {
     const { userInfo, productInfo } = useContext(UserContext);
     const [user, setUser] = userInfo;
     const userEmailId = user;
-    console.log(productInfo);
+    //console.log(productInfo);
     console.log("Current User (post ad page):" + userEmailId);
 
     const navigate = useNavigate();
@@ -73,6 +73,7 @@ export default function PostAdForm() {
             axios.post('http://localhost:8000/upload', data)
                 .then((response) => {
                     alert("File has been sucessfully uploaded");
+                    console.log(response);
                 })
                 .catch((e) => {
                     console.log('Upload Error: ' + e)
@@ -181,11 +182,7 @@ export default function PostAdForm() {
                     />
                     <Input type="file"
                            onChange={onInputChange}
-
-                           multiple/>
-
-                    {/*<Button size="small" variant="contained" onClick={onSubmit}>Upload Image</Button>*/}
-
+                    />
 
                     <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
                         Publish!

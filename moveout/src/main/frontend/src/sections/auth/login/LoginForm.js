@@ -20,6 +20,7 @@ export default function LoginForm() {
 
     const { userInfo, productInfo } = useContext(UserContext);
     const [user, setUser] = userInfo;
+    localStorage.setItem("userEmailId", null);
     console.log("Current User: " + userInfo);
 
     const navigate = useNavigate();
@@ -43,6 +44,7 @@ export default function LoginForm() {
                 console.log(response);
                 navigate('/dashboard/products', { replace: true });
                 setUser(formik.values.email);
+                localStorage.setItem("userEmailId", formik.values.email);
                 console.log("User on login page: " + userInfo);
             }).catch((error) => {
                 console.log(error);

@@ -5,9 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 
 
@@ -39,7 +37,7 @@ public class ProductController {
 
     @PostMapping("/getProductsByName")
     public List<ProductTable> searchSubmit(@RequestBody String product) {
-        List<ProductTable> search = productRepository.findByprdname(product.substring(0,  product.length() - 1));
+        List<ProductTable> search = productRepository.findByprdnameContaining(product.substring(0,  product.length() - 1));
         return search;
     }
 }
