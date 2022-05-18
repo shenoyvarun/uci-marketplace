@@ -32,8 +32,7 @@ export default function PostAdForm() {
     const { userInfo, productInfo } = useContext(UserContext);
     const [user, setUser] = userInfo;
     const userEmailId = user;
-    //console.log(productInfo);
-    console.log("Current User (post ad page):" + userEmailId);
+    console.log("Current User (post ad page):" , userEmailId.email);
 
     const navigate = useNavigate();
 
@@ -59,7 +58,7 @@ export default function PostAdForm() {
             prdCondition: '',
             prdDec: '',
             prdImage: '',
-            userId: userEmailId
+            userId: userEmailId.email
         },
         validationSchema: ProductDetailsValidation,
         onSubmit: ( values) => {
