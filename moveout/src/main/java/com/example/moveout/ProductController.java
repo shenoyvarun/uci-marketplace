@@ -37,7 +37,7 @@ public class ProductController {
 
     @PostMapping("/getProductsByName")
     public List<ProductTable> searchSubmit(@RequestBody String product) {
-        List<ProductTable> search = productRepository.findByprdnameContaining(product.substring(0,  product.length() - 1));
+        List<ProductTable> search = productRepository.findByPrdnameContainingOrPrdtypeContaining(product.substring(0,  product.length() - 1),product.substring(0,  product.length() - 1) );
         return search;
     }
 }

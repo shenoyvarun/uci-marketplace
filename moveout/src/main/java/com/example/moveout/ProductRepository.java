@@ -10,5 +10,6 @@ import java.util.List;
 public interface ProductRepository extends CrudRepository<ProductTable, Integer> {
     List<ProductTable> findAll();
 
-    List<ProductTable> findByprdnameContaining(String name);
+    List<ProductTable> findByPrdnameContainingOrPrdtypeContaining(String name, String type);
+
 }

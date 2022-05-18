@@ -12,25 +12,14 @@ import Iconify from "../../components/Iconify";
 
 const MENU_OPTIONS = [
   {
-      label: 'Home',
-      icon: 'eva:home-fill',
-      linkTo: '/dashboard/products',
-  },
-  {
       label: 'Profile',
       icon: 'eva:person-fill',
       linkTo: '/dashboard/user',
   },
   {
-      label: 'Settings',
-      icon: 'eva:settings-2-fill',
-      linkTo: '#',
-  },
-  {
       label: 'Logout',
       icon: 'eva:log-out-fill',
       linkTo: '/login',
-
   },
 ];
 
