@@ -40,9 +40,9 @@ export default function LoginForm() {
             console.log("Passing to Backend ", values);
             axios.post(LOGIN_USER, values).then((response) => {
                 console.log(response);
-                navigate('/dashboard/products', { replace: true });
                 setUser(response.data);
                 localStorage.setItem("userDetails", JSON.stringify(response.data));
+                navigate('/dashboard/products', { replace: true });
             }).catch((error) => {
                 console.log(error);
                 alert("Invalid Email Id / Password");
