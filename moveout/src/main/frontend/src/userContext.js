@@ -3,7 +3,7 @@ export const UserContext = createContext();
 
 export const UserContextProvider = (props) => {
     const [userInfo, setUserInfo] = useState(()=>{
-        const savedUser = localStorage.getItem("userEmailId");
+        const savedUser = JSON.parse(localStorage.getItem("userDetails"));
         // const initialValue = JSON.parse(savedUser);
         return savedUser || null;
     });

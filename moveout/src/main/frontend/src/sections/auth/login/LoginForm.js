@@ -20,9 +20,7 @@ export default function LoginForm() {
 
     const { userInfo, productInfo } = useContext(UserContext);
     const [user, setUser] = userInfo;
-    localStorage.setItem("userEmailId", null);
-    console.log("Current User: " + userInfo);
-
+    localStorage.setItem("userDetails", null);
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
 
@@ -42,10 +40,9 @@ export default function LoginForm() {
             console.log("Passing to Backend ", values);
             axios.post(LOGIN_USER, values).then((response) => {
                 console.log(response);
+                setUser(response.data);
+                localStorage.setItem("userDetails", JSON.stringify(response.data));
                 navigate('/dashboard/products', { replace: true });
-                setUser(formik.values.email);
-                localStorage.setItem("userEmailId", formik.values.email);
-                console.log("User on login page: " + userInfo);
             }).catch((error) => {
                 console.log(error);
                 alert("Invalid Email Id / Password");

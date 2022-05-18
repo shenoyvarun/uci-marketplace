@@ -34,7 +34,7 @@ public class LoginController {
         logger.info(String.valueOf(userInfo));
         if(userInfo != null){
             logger.info(userInfo.getEmail());
-            return new ResponseEntity<>("Success", HttpStatus.OK);
+            return new ResponseEntity<>(userInfo, HttpStatus.OK);
         } else {
             logger.info("Fail");
             return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
