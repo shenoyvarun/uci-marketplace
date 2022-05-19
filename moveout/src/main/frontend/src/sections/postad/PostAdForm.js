@@ -1,56 +1,88 @@
 import * as Yup from 'yup';
 import * as React from 'react';
-import { useFormik, Form, FormikProvider } from 'formik';
+import {useContext, useState} from 'react';
+import {Form, FormikProvider, useFormik} from 'formik';
 // material
-import { Stack, TextField, MenuItem, InputAdornment } from '@mui/material';
-
+import {Input, InputAdornment, MenuItem, Stack, TextField} from '@mui/material';
 // component
 import {LoadingButton} from "@mui/lab";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {ADD_PRODUCT} from "../../api-config";
-
+import {UserContext} from "../../userContext";
 
 // ----------------------------------------------------------------------
 
 const categories = [
-    {value: 'furniture', label: 'Furniture',},
-    {value: 'kitchen', label: 'Kitchen Supplies',},
-    {value: 'electronics', label: 'Electronics',},
-    {value: 'clothes', label: 'Clothes',},
+    {value: 'Furniture', label: 'Furniture',},
+    {value: 'Kitchen Supplies', label: 'Kitchen Supplies',},
+    {value: 'Electronics', label: 'Electronics',},
+    {value: 'Apparel', label: 'Apparel',},
 ];
 
 const condition = [
-    {value: 'new', label: 'New',},
-    {value: 'used_lnew', label: 'Used - like new',},
-    {value: 'used_good', label: 'Used - good',},
-    {value: 'used_fair', label: 'Used - fair',},
+    {value: 'New', label: 'New',},
+    {value: 'Used - Like New', label: 'Used - like new',},
+    {value: 'Used - Good', label: 'Used - good',},
+    {value: 'Used - Fair', label: 'Used - fair',},
 ];
 
 export default function PostAdForm() {
+
+    const { userInfo, productInfo } = useContext(UserContext);
+    const [user, setUser] = userInfo;
+    const userEmailId = user;
+    console.log("Current User (post ad page):" , userEmailId.email);
+
     const navigate = useNavigate();
 
     const ProductDetailsValidation = Yup.object().shape({
-        prdName: Yup.string().required('Required'),
+        prdname: Yup.string().required('Required'),
         prdType: Yup.string().required('Required'),
         prdCondition: Yup.string().required('Required'),
         prdPrice: Yup.number().required('Numeric input required'),
     });
 
+    const [files, setFiles] = useState([]);
+
+    const onInputChange = (e) => {
+        console.log(e)
+        setFiles(e.target.files)
+    };
+
     const formik = useFormik({
         initialValues: {
-            prdName: '',
+            prdname: '',
             prdPrice:'',
             prdType: '',
             prdCondition: '',
-            prdDec: ''
+            prdDec: '',
+            prdImage: '',
+            userId: userEmailId.email
         },
         validationSchema: ProductDetailsValidation,
         onSubmit: ( values) => {
+
+            const data = new FormData();
+
+            data.append('file', files[0]);
+            formik.values.prdImage = files[0].name;
+            console.log(formik.values.prdImage);
+
+            axios.post('http://localhost:8000/upload', data)
+                .then((response) => {
+                    alert("File has been sucessfully uploaded");
+                    console.log(response);
+                })
+                .catch((e) => {
+                    console.log('Upload Error: ' + e)
+                })
+
             console.log("Passing Registration Details to Backend ", values);
             axios.post(ADD_PRODUCT, values).then((response) => {
                 console.log(response);
-                navigate('/postlogin', { replace: true });
+                alert("Your Product has been Successfully Posted !");
+                navigate('/dashboard/products', { replace: true });
             }).catch((error) => {
                 console.log(error);
                 navigate('/404', { replace: true });
@@ -71,11 +103,11 @@ export default function PostAdForm() {
                         type = "text"
                         label="Product Name"
                         onChange={formik.handleChange}
-                        value={formik.values.prdName}
+                        value={formik.values.prdname}
                         variant="filled"
-                        {...getFieldProps('prdName')}
-                        error={Boolean(touched.prdName && errors.prdName)}
-                        helperText={touched.prdName && errors.prdName}
+                        {...getFieldProps('prdname')}
+                        error={Boolean(touched.prdname && errors.prdname)}
+                        helperText={touched.prdname && errors.prdname}
                     />
                     <TextField
                         fullWidth
@@ -84,7 +116,7 @@ export default function PostAdForm() {
                         type = "number"
                         label="Price"
                         onChange={formik.handleChange}
-                        value={formik.values.prdName}
+                        value={formik.values.prdname}
                         variant="filled"
                         startAdornment={<InputAdornment position="start">$</InputAdornment>}
                         {...getFieldProps('prdPrice')}
@@ -146,6 +178,9 @@ export default function PostAdForm() {
                         {...getFieldProps('prdDec')}
                         error={Boolean(touched.prdDec && errors.prdDec)}
                         helperText={touched.prdDec && errors.prdDec}
+                    />
+                    <Input type="file"
+                           onChange={onInputChange}
                     />
 
                     <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>

@@ -26,51 +26,36 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { name, cover, price, colors, status, priceSale } = product;
+  const { id, prdcondition, prddec, prdname, prdprice, prdtype, prdimage } = product;
 
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {status && (
-          <Label
-            variant="filled"
-            color={(status === 'sale' && 'error') || 'info'}
-            sx={{
-              zIndex: 9,
-              top: 16,
-              right: 16,
-              position: 'absolute',
-              textTransform: 'uppercase',
-            }}
-          >
-            {status}
-          </Label>
-        )}
-        <ProductImgStyle alt={name} src={cover} />
+        <ProductImgStyle alt={prdname} src={`/static/mock-images/products/Product_${prdimage}`} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Link to="#" color="inherit" underline="hover" component={RouterLink}>
+        <Link to={`/dashboard/productinfo`} state = {{ product }}  color="inherit" underline="hover" component={RouterLink}>
           <Typography variant="subtitle2" noWrap>
-            {name}
+            {prdname}
           </Typography>
         </Link>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
+
           <Typography variant="subtitle1">
-            <Typography
-              component="span"
-              variant="body1"
-              sx={{
-                color: 'text.disabled',
-                textDecoration: 'line-through',
-              }}
-            >
-              {priceSale && fCurrency(priceSale)}
-            </Typography>
+            {/*<Typography*/}
+            {/*  component="span"*/}
+            {/*  variant="body1"*/}
+            {/*  sx={{*/}
+            {/*    color: 'text.disabled',*/}
+            {/*    textDecoration: 'line-through',*/}
+            {/*  }}*/}
+            {/*>*/}
+            {/*  {prdprice && fCurrency(prdprice)}*/}
+            {/*</Typography>*/}
             &nbsp;
-            {fCurrency(price)}
+            {fCurrency(prdprice)}
           </Typography>
         </Stack>
       </Stack>

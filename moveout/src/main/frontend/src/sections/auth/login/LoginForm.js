@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
 import {LOGIN_USER} from "../../../api-config";
+import {UserContext} from "../../../userContext";
 // ----------------------------------------------------------------------
 
 const headers = {
@@ -16,8 +17,11 @@ const headers = {
 }
 
 export default function LoginForm() {
-    const navigate = useNavigate();
 
+    const { userInfo, productInfo } = useContext(UserContext);
+    const [user, setUser] = userInfo;
+    localStorage.setItem("userDetails", null);
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
 
     const LoginSchema = Yup.object().shape({
@@ -36,10 +40,13 @@ export default function LoginForm() {
             console.log("Passing to Backend ", values);
             axios.post(LOGIN_USER, values).then((response) => {
                 console.log(response);
-                navigate('/postad', { replace: true });
+                setUser(response.data);
+                localStorage.setItem("userDetails", JSON.stringify(response.data));
+                navigate('/dashboard/products', { replace: true });
             }).catch((error) => {
                 console.log(error);
-                navigate('/404', { replace: true });
+                alert("Invalid Email Id / Password");
+                // navigate('/login', { replace: true });
             })
         },
     });
@@ -52,6 +59,7 @@ export default function LoginForm() {
 
 
     return (
+
         <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <Stack spacing={3}>
@@ -97,7 +105,7 @@ export default function LoginForm() {
                     </Link>
                 </Stack>
 
-                <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+                <LoadingButton fullWidth size="large" type="submit" variant="contained" >
                     Login
                 </LoadingButton>
             </Form>
