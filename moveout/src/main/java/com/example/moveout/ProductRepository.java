@@ -12,4 +12,6 @@ public interface ProductRepository extends CrudRepository<ProductTable, Integer>
 
     List<ProductTable> findByPrdnameContainingOrPrdtypeContaining(String name, String type);
 
+    List<ProductTable> findByUserid(String name);
+
 }

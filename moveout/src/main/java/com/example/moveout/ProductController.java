@@ -37,7 +37,14 @@ public class ProductController {
 
     @PostMapping("/getProductsByName")
     public List<ProductTable> searchSubmit(@RequestBody String product) {
-        List<ProductTable> search = productRepository.findByPrdnameContainingOrPrdtypeContaining(product.substring(0,  product.length() - 1),product.substring(0,  product.length() - 1) );
-        return search;
+        return productRepository.findByPrdnameContainingOrPrdtypeContaining(product.substring(0,  product.length() - 1),product.substring(0,  product.length() - 1) );
     }
+
+    @PostMapping("/getUserProducts")
+    public List<ProductTable> productByUser(@RequestBody String product) {
+        product = product.replace("%40", "@");
+        return productRepository.findByUserid(product.substring(0,  product.length() - 1));
+    }
+
+
 }
