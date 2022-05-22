@@ -9,9 +9,10 @@ export const UserContextProvider = (props) => {
     });
     const [productInfo, setProductInfo] = useState([]);
     const [sellerInfo, setSellerInfo] = useState([]);
+    const [soldProducts, setsoldProducts] = useState([]);
     return (
         <UserContext.Provider
-            value={{ userInfo: [userInfo, setUserInfo], productInfo: [productInfo, setProductInfo], sellerInfo: [sellerInfo, setSellerInfo] }}
+            value={{ userInfo: [userInfo, setUserInfo], productInfo: [productInfo, setProductInfo], sellerInfo: [sellerInfo, setSellerInfo], soldProducts: [soldProducts, setsoldProducts] }}
         >
             {props.children}
         </UserContext.Provider>
