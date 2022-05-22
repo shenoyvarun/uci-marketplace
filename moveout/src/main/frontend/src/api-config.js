@@ -8,3 +8,5 @@ export const GET_PRODUCTS_BY_NAME = backendHost+'/getProductsByName';
 export const GET_SELLER_BY_EMAIL = backendHost+'/getSellerDetails';
 export const GET_PRODUCTS_BY_USER = backendHost+'/getUserProducts';
 export const DELETE_PRODUCT = backendHost+'/deleteProduct';
+export const MARK_AS_SOLD = backendHost+'/markAsSold';
+export const GET_PRODUCTS_BY_USER_SOLD = backendHost+'/getSoldProductsOfUser'
