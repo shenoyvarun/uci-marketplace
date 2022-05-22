@@ -8,7 +8,7 @@ import { pink } from '@mui/material/colors';
 import Page from '../components/Page';
 import Popup from '../components/Popup';
 import axios from "axios";
-import {GET_PRODUCTS_BY_USER, GET_SELLER_BY_EMAIL, DELETE_PRODUCT} from "../api-config";
+import {GET_PRODUCTS_BY_USER, GET_SELLER_BY_EMAIL, DELETE_PRODUCT, MARK_AS_SOLD} from "../api-config";
 import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../userContext";
 
@@ -51,6 +51,19 @@ export default function Productinfo() {
                 console.log(error)
             })
     }
+
+    const markSold = (e) => {
+        axios.post(MARK_AS_SOLD, data.product.id.toString())
+            .then((response) => {
+                console.log("Response: " , response.data)
+                navigate('/dashboard/products', { replace: true });
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+
     const handleOnClick = (e) => {
         e.preventDefault();
         console.log("Passing seller email id to fetch seller details: ", data.product);
@@ -72,10 +85,13 @@ export default function Productinfo() {
         deleteButton = <Button variant="outlined" sx={{ color: pink[500] }} onClick = { handleDelete } startIcon={<DeleteIcon />}>
             Delete Product
         </Button>
-        markAsSold = <Button variant="contained" color="success" size = "large">
+    }
+    if(user.email === data.product.userid && data.product.status === 0){
+        markAsSold = <Button variant="contained" color="success" size = "large" onClick = { markSold }>
             Mark As Sold
         </Button>
     }
+
     return (
         <Page title="Product Details">
             <Container>
