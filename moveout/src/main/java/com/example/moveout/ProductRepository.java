@@ -9,7 +9,15 @@ import java.util.List;
 
 public interface ProductRepository extends CrudRepository<ProductTable, Integer> {
     List<ProductTable> findAll();
+    List<ProductTable> findAllByStatusEquals(int status);
 
     List<ProductTable> findByPrdnameContainingOrPrdtypeContaining(String name, String type);
+
+
+    List<ProductTable> findByUseridAndStatusEquals(String id, int status);
+
+    public void deleteById(int id);
+
+    ProductTable findById(int id);
 
 }

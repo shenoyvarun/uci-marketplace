@@ -1,13 +1,15 @@
-import {Link as RouterLink, useLocation} from 'react-router-dom';
+import {Link as RouterLink, useLocation, useNavigate} from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Button, Typography, Container, Box, Stack } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { pink } from '@mui/material/colors';
 // components
 import Page from '../components/Page';
 import Popup from '../components/Popup';
 import axios from "axios";
-import {GET_SELLER_BY_EMAIL} from "../api-config";
-import {useContext, useState} from "react";
+import {GET_PRODUCTS_BY_USER, GET_SELLER_BY_EMAIL, DELETE_PRODUCT, MARK_AS_SOLD} from "../api-config";
+import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../userContext";
 
 // ----------------------------------------------------------------------
@@ -23,6 +25,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 }));
 
 export default function Productinfo() {
+    const navigate = useNavigate();
     let location = useLocation();
     const data = location.state;
     console.log(data);
@@ -34,6 +37,32 @@ export default function Productinfo() {
     //                      phone: '' };
     const {sellerInfo} = useContext(UserContext);
     const [sellerInformation, setSellerInfo] = sellerInfo;
+    const { userInfo } = useContext(UserContext);
+    const [ user ] = userInfo
+    console.log(typeof data.product.prdname);
+    console.log(user.email);
+    const handleDelete = (e) => {
+        axios.post(DELETE_PRODUCT, data.product.id.toString())
+            .then((response) => {
+                console.log("Response: " , response.data)
+                navigate('/dashboard/products', { replace: true });
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const markSold = (e) => {
+        axios.post(MARK_AS_SOLD, data.product.id.toString())
+            .then((response) => {
+                console.log("Response: " , response.data)
+                navigate('/dashboard/products', { replace: true });
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
 
     const handleOnClick = (e) => {
         e.preventDefault();
@@ -48,7 +77,21 @@ export default function Productinfo() {
             })
         setOpenPopup(true)
     };
+
+    console.log(data.product.userid);
     console.log("Seller info: ", sellerInformation);
+    let deleteButton, markAsSold;
+    if(user.email === data.product.userid){
+        deleteButton = <Button variant="outlined" sx={{ color: pink[500] }} onClick = { handleDelete } startIcon={<DeleteIcon />}>
+            Delete Product
+        </Button>
+    }
+    if(user.email === data.product.userid && data.product.status === 0){
+        markAsSold = <Button variant="contained" color="success" size = "large" onClick = { markSold }>
+            Mark As Sold
+        </Button>
+    }
+
     return (
         <Page title="Product Details">
             <Container>
@@ -85,6 +128,8 @@ export default function Productinfo() {
                         onClick={handleOnClick}>
                       Get Seller Details
                     </Button>
+                    <br />
+                    {markAsSold} <br />  {deleteButton}
                 </ContentStyle>
             </Container>
             <Popup

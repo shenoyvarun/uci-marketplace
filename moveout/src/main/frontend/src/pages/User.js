@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
@@ -27,6 +27,10 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
+import {UserContext} from "../userContext";
+import axios from "axios";
+import {GET_PRODUCTS, GET_PRODUCTS_BY_NAME, GET_PRODUCTS_BY_USER, GET_PRODUCTS_BY_USER_SOLD} from "../api-config";
+import {ProductList} from "../sections/@dashboard/products";
 
 // ----------------------------------------------------------------------
 
@@ -71,6 +75,26 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function User() {
+  const { userInfo, productInfo, soldProducts } = useContext(UserContext);
+  const [prodInfo, setprodInfo] = productInfo;
+  const [soldProductsInfo, setsoldProductsInfo] = soldProducts;
+  const [ user ] = userInfo
+  useEffect(() =>{
+    axios.post(GET_PRODUCTS_BY_USER, user.email).then((response) => {
+      console.log(response.data);
+      setprodInfo(response.data);
+      console.log(productInfo);
+    }).catch((error) => {
+      console.log(error);
+    })
+    axios.post(GET_PRODUCTS_BY_USER_SOLD, user.email).then((response) => {
+      console.log(response.data);
+      setsoldProductsInfo(response.data);
+      console.log(soldProductsInfo);
+    }).catch((error) => {
+      console.log(error);
+    })
+  }, []);
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -132,104 +156,43 @@ export default function User() {
 
   const isUserNotFound = filteredUsers.length === 0;
 
+  let addText;
+  if(productInfo[0].length === 0){
+    addText = "Start selling all the stuff you don't need!!"
+  }
+
+  let soldText;
+  if(soldProductsInfo.length === 0){
+    soldText = "Not sold anything yet!"
+  }
   return (
     <Page title="User">
-      {/*<Container>*/}
-      {/*  <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>*/}
-      {/*    <Typography variant="h4" gutterBottom>*/}
-      {/*      User*/}
-      {/*    </Typography>*/}
-      {/*    <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>*/}
-      {/*      New User*/}
-      {/*    </Button>*/}
-      {/*  </Stack>*/}
+      <Container>
+        <Typography variant="h4" sx={{ mb: 5 }}>
+          Active Products Listed by the User
+        </Typography>
+        <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
+          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
+          </Stack>
+        </Stack>
+          {addText}
+        <ProductList products={prodInfo} />
+      </Container>
+      <br /><br /><br /><br />
+      <Container>
+        <Typography variant="h4" sx={{ mb: 5 }}>
+          Sold Products Listed by the User
+        </Typography>
 
-      {/*  <Card>*/}
-      {/*    <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />*/}
-
-      {/*    <Scrollbar>*/}
-      {/*      <TableContainer sx={{ minWidth: 800 }}>*/}
-      {/*        <Table>*/}
-      {/*          <UserListHead*/}
-      {/*            order={order}*/}
-      {/*            orderBy={orderBy}*/}
-      {/*            headLabel={TABLE_HEAD}*/}
-      {/*            rowCount={USERLIST.length}*/}
-      {/*            numSelected={selected.length}*/}
-      {/*            onRequestSort={handleRequestSort}*/}
-      {/*            onSelectAllClick={handleSelectAllClick}*/}
-      {/*          />*/}
-      {/*          <TableBody>*/}
-      {/*            {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {*/}
-      {/*              const { id, name, role, status, company, avatarUrl, isVerified } = row;*/}
-      {/*              const isItemSelected = selected.indexOf(name) !== -1;*/}
-
-      {/*              return (*/}
-      {/*                <TableRow*/}
-      {/*                  hover*/}
-      {/*                  key={id}*/}
-      {/*                  tabIndex={-1}*/}
-      {/*                  role="checkbox"*/}
-      {/*                  selected={isItemSelected}*/}
-      {/*                  aria-checked={isItemSelected}*/}
-      {/*                >*/}
-      {/*                  <TableCell padding="checkbox">*/}
-      {/*                    <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} />*/}
-      {/*                  </TableCell>*/}
-      {/*                  <TableCell component="th" scope="row" padding="none">*/}
-      {/*                    <Stack direction="row" alignItems="center" spacing={2}>*/}
-      {/*                      <Avatar alt={name} src={avatarUrl} />*/}
-      {/*                      <Typography variant="subtitle2" noWrap>*/}
-      {/*                        {name}*/}
-      {/*                      </Typography>*/}
-      {/*                    </Stack>*/}
-      {/*                  </TableCell>*/}
-      {/*                  <TableCell align="left">{company}</TableCell>*/}
-      {/*                  <TableCell align="left">{role}</TableCell>*/}
-      {/*                  <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>*/}
-      {/*                  <TableCell align="left">*/}
-      {/*                    <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>*/}
-      {/*                      {sentenceCase(status)}*/}
-      {/*                    </Label>*/}
-      {/*                  </TableCell>*/}
-
-      {/*                  <TableCell align="right">*/}
-      {/*                    <UserMoreMenu />*/}
-      {/*                  </TableCell>*/}
-      {/*                </TableRow>*/}
-      {/*              );*/}
-      {/*            })}*/}
-      {/*            {emptyRows > 0 && (*/}
-      {/*              <TableRow style={{ height: 53 * emptyRows }}>*/}
-      {/*                <TableCell colSpan={6} />*/}
-      {/*              </TableRow>*/}
-      {/*            )}*/}
-      {/*          </TableBody>*/}
-
-      {/*          {isUserNotFound && (*/}
-      {/*            <TableBody>*/}
-      {/*              <TableRow>*/}
-      {/*                <TableCell align="center" colSpan={6} sx={{ py: 3 }}>*/}
-      {/*                  <SearchNotFound searchQuery={filterName} />*/}
-      {/*                </TableCell>*/}
-      {/*              </TableRow>*/}
-      {/*            </TableBody>*/}
-      {/*          )}*/}
-      {/*        </Table>*/}
-      {/*      </TableContainer>*/}
-      {/*    </Scrollbar>*/}
-
-      {/*    <TablePagination*/}
-      {/*      rowsPerPageOptions={[5, 10, 25]}*/}
-      {/*      component="div"*/}
-      {/*      count={USERLIST.length}*/}
-      {/*      rowsPerPage={rowsPerPage}*/}
-      {/*      page={page}*/}
-      {/*      onPageChange={handleChangePage}*/}
-      {/*      onRowsPerPageChange={handleChangeRowsPerPage}*/}
-      {/*    />*/}
-      {/*  </Card>*/}
-      {/*</Container>*/}
+        <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
+          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
+          </Stack>
+        </Stack>
+        <Typography>
+          {soldText}
+        </Typography>
+        <ProductList products={soldProductsInfo} />
+      </Container>
     </Page>
   );
 }

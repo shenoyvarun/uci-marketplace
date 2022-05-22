@@ -58,7 +58,8 @@ export default function PostAdForm() {
             prdCondition: '',
             prdDec: '',
             prdImage: '',
-            userId: userEmailId.email
+            userId: userEmailId.email,
+            status: 1
         },
         validationSchema: ProductDetailsValidation,
         onSubmit: ( values) => {
@@ -68,7 +69,7 @@ export default function PostAdForm() {
             data.append('file', files[0]);
             formik.values.prdImage = files[0].name;
             console.log(formik.values.prdImage);
-
+            console.log(data);
             axios.post('http://localhost:8000/upload', data)
                 .then((response) => {
                     alert("File has been sucessfully uploaded");
