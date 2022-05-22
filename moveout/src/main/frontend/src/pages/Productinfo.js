@@ -67,10 +67,13 @@ export default function Productinfo() {
 
     console.log(data.product.userid);
     console.log("Seller info: ", sellerInformation);
-    let deleteButton;
+    let deleteButton, markAsSold;
     if(user.email === data.product.userid){
         deleteButton = <Button variant="outlined" sx={{ color: pink[500] }} onClick = { handleDelete } startIcon={<DeleteIcon />}>
             Delete Product
+        </Button>
+        markAsSold = <Button variant="contained" color="success" size = "large">
+            Mark As Sold
         </Button>
     }
     return (
@@ -110,7 +113,7 @@ export default function Productinfo() {
                       Get Seller Details
                     </Button>
                     <br />
-                    {deleteButton}
+                    {markAsSold} <br />  {deleteButton}
                 </ContentStyle>
             </Container>
             <Popup
