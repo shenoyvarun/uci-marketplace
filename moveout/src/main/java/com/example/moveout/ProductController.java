@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -32,7 +33,7 @@ public class ProductController {
 
     @GetMapping("/getAllProducts")
     public List<ProductTable> list(){
-        return productRepository.findAll();
+        return productRepository.findAllByStatusEquals(0);
     }
 
     @PostMapping("/getProductsByName")
@@ -43,13 +44,27 @@ public class ProductController {
     @PostMapping("/getUserProducts")
     public List<ProductTable> productByUser(@RequestBody String product) {
         product = product.replace("%40", "@");
-        return productRepository.findByUserid(product.substring(0,  product.length() - 1));
+        return productRepository.findByUseridAndStatusEquals(product.substring(0,  product.length() - 1), 0);
+    }
+
+    @PostMapping("/getSoldProductsOfUser")
+    public List<ProductTable> getSoldProductsOfUser(@RequestBody String product) {
+        product = product.replace("%40", "@");
+        return productRepository.findByUseridAndStatusEquals(product.substring(0,  product.length() - 1), 1);
     }
 
     @PostMapping("/deleteProduct")
     public void deleteProduct(@RequestBody String id) {
         id = id.substring(0, id.length() - 1);
         productRepository.deleteById(Integer.parseInt(id));
+    }
+
+    @PostMapping("/markAsSold")
+    public void markAsSold(@RequestBody String id) {
+        id = id.substring(0, id.length() - 1);
+        ProductTable product = productRepository.findById(Integer.parseInt(id));
+        product.setStatus(1);
+        productRepository.save(product);
     }
 
 
