@@ -46,5 +46,11 @@ public class ProductController {
         return productRepository.findByUserid(product.substring(0,  product.length() - 1));
     }
 
+    @PostMapping("/deleteProduct")
+    public void deleteProduct(@RequestBody String id) {
+        id = id.substring(0, id.length() - 1);
+        productRepository.deleteById(Integer.parseInt(id));
+    }
+
 
 }

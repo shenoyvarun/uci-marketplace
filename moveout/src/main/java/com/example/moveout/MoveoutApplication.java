@@ -25,7 +25,7 @@ public class MoveoutApplication {
 					registry.addMapping("/getAllProducts").allowedOrigins(frontEndHost);
 					registry.addMapping("/getSellerDetails").allowedOrigins(frontEndHost);
 					registry.addMapping("/upload").allowedOrigins(frontEndHost);
-
+					registry.addMapping("/deleteProduct").allowedOrigins(frontEndHost);
 				}
 			};
 		}

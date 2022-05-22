@@ -1,4 +1,4 @@
-import {Link as RouterLink, useLocation} from 'react-router-dom';
+import {Link as RouterLink, useLocation, useNavigate} from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Button, Typography, Container, Box, Stack } from '@mui/material';
@@ -6,8 +6,8 @@ import { Button, Typography, Container, Box, Stack } from '@mui/material';
 import Page from '../components/Page';
 import Popup from '../components/Popup';
 import axios from "axios";
-import {GET_SELLER_BY_EMAIL} from "../api-config";
-import {useContext, useState} from "react";
+import {GET_PRODUCTS_BY_USER, GET_SELLER_BY_EMAIL, DELETE_PRODUCT} from "../api-config";
+import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../userContext";
 
 // ----------------------------------------------------------------------
@@ -23,6 +23,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 }));
 
 export default function Productinfo() {
+    const navigate = useNavigate();
     let location = useLocation();
     const data = location.state;
     console.log(data);
@@ -34,7 +35,20 @@ export default function Productinfo() {
     //                      phone: '' };
     const {sellerInfo} = useContext(UserContext);
     const [sellerInformation, setSellerInfo] = sellerInfo;
-
+    const { userInfo } = useContext(UserContext);
+    const [ user ] = userInfo
+    console.log(typeof data.product.prdname);
+    console.log(user.email);
+    const handleDelete = (e) => {
+        axios.post(DELETE_PRODUCT, data.product.id.toString())
+            .then((response) => {
+                console.log("Response: " , response.data)
+                navigate('/dashboard/products', { replace: true });
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
     const handleOnClick = (e) => {
         e.preventDefault();
         console.log("Passing seller email id to fetch seller details: ", data.product);
@@ -48,7 +62,15 @@ export default function Productinfo() {
             })
         setOpenPopup(true)
     };
+
+    console.log(data.product.userid);
     console.log("Seller info: ", sellerInformation);
+    let deleteButton;
+    if(user.email === data.product.userid){
+        deleteButton = <Button variant="outlined" color="error" onClick = { handleDelete }>
+            Delete Product
+        </Button>
+    }
     return (
         <Page title="Product Details">
             <Container>
@@ -85,6 +107,7 @@ export default function Productinfo() {
                         onClick={handleOnClick}>
                       Get Seller Details
                     </Button>
+                    {deleteButton}
                 </ContentStyle>
             </Container>
             <Popup

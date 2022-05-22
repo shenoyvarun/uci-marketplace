@@ -14,4 +14,5 @@ public interface ProductRepository extends CrudRepository<ProductTable, Integer>
 
     List<ProductTable> findByUserid(String name);
 
+    public void deleteById(int id);
 }
