@@ -2,6 +2,8 @@ import {Link as RouterLink, useLocation, useNavigate} from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Button, Typography, Container, Box, Stack } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { pink } from '@mui/material/colors';
 // components
 import Page from '../components/Page';
 import Popup from '../components/Popup';
@@ -67,7 +69,7 @@ export default function Productinfo() {
     console.log("Seller info: ", sellerInformation);
     let deleteButton;
     if(user.email === data.product.userid){
-        deleteButton = <Button variant="outlined" color="error" onClick = { handleDelete }>
+        deleteButton = <Button variant="outlined" sx={{ color: pink[500] }} onClick = { handleDelete } startIcon={<DeleteIcon />}>
             Delete Product
         </Button>
     }
@@ -107,6 +109,7 @@ export default function Productinfo() {
                         onClick={handleOnClick}>
                       Get Seller Details
                     </Button>
+                    <br />
                     {deleteButton}
                 </ContentStyle>
             </Container>
