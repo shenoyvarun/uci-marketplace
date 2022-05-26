@@ -78,7 +78,7 @@ export default function User() {
   const { userInfo, productInfo, soldProducts } = useContext(UserContext);
   const [prodInfo, setprodInfo] = productInfo;
   const [soldProductsInfo, setsoldProductsInfo] = soldProducts;
-  const [ user ] = userInfo
+  const [ user ] = userInfo;
   useEffect(() =>{
     axios.post(GET_PRODUCTS_BY_USER, user.email).then((response) => {
       console.log(response.data);
