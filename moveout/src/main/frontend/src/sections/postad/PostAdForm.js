@@ -180,8 +180,9 @@ export default function PostAdForm() {
                         error={Boolean(touched.prdDec && errors.prdDec)}
                         helperText={touched.prdDec && errors.prdDec}
                     />
-                    <Input type="file"
-                           onChange={onInputChange}
+                    <input accept="image/*"
+                    type="file"
+                    onChange={onInputChange}
                     />
 
                     <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
