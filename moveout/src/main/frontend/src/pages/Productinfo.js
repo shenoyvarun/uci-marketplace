@@ -11,6 +11,7 @@ import axios from "axios";
 import {GET_PRODUCTS_BY_USER, GET_SELLER_BY_EMAIL, DELETE_PRODUCT, MARK_AS_SOLD} from "../api-config";
 import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../userContext";
+import Chat from "../components/Chat";
 
 // ----------------------------------------------------------------------
 
@@ -149,6 +150,7 @@ export default function Productinfo() {
                     </Typography>
                 </Container>
             </Popup>
+            <Chat/>
         </Page>
     );
 }

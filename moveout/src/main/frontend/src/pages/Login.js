@@ -70,7 +70,7 @@ export default function Login() {
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
               Hi, Welcome to UCI Marketplace
             </Typography>
-            {/*<img src="/static/illustrations/illustration_login.png" alt="login" />*/}
+            <img alt="register" src="/static/illustrations/logo.png" />
           </SectionStyle>
         )}
 

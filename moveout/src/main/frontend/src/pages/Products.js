@@ -4,6 +4,7 @@ import { Container, Stack, Typography } from '@mui/material';
 // components
 import Page from '../components/Page';
 import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../sections/@dashboard/products';
+import Chat from '../components/Chat';
 // mock
 import axios from "axios";
 import {GET_PRODUCTS} from "../api-config";
@@ -58,6 +59,8 @@ export default function EcommerceShop() {
 
         <ProductList products={prodInfo} />
         {/*<ProductCartWidget />*/}
+          <Chat/>
+
       </Container>
     </Page>
   );
