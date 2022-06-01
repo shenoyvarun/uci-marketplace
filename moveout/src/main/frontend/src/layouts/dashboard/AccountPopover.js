@@ -17,7 +17,7 @@ const MENU_OPTIONS = [
       linkTo: '/dashboard/user',
   },
   {
-      label: '',
+      label: 'Logout',
       icon: 'eva:log-out-fill',
       linkTo: '/login',
   },
