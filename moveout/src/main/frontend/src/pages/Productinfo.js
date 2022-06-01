@@ -8,12 +8,18 @@ import { pink } from '@mui/material/colors';
 import Page from '../components/Page';
 import Popup from '../components/Popup';
 import axios from "axios";
-import {GET_PRODUCTS_BY_USER, GET_SELLER_BY_EMAIL, DELETE_PRODUCT, MARK_AS_SOLD} from "../api-config";
+import {GET_PRODUCTS_BY_USER, GET_SELLER_BY_EMAIL, DELETE_PRODUCT, MARK_AS_SOLD, CHECKOUT} from "../api-config";
 import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../userContext";
 import Chat from "../components/Chat";
+import StripeCheckout from "react-stripe-checkout";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 // ----------------------------------------------------------------------
+
+toast.configure()
 
 const ContentStyle = styled('div')(({ theme }) => ({
     maxWidth: 480,
@@ -64,7 +70,6 @@ export default function Productinfo() {
             })
     }
 
-
     const handleOnClick = (e) => {
         e.preventDefault();
         console.log("Passing seller email id to fetch seller details: ", data.product);
@@ -91,6 +96,21 @@ export default function Productinfo() {
         markAsSold = <Button variant="contained" color="success" size = "large" onClick = { markSold }>
             Mark As Sold
         </Button>
+    }
+
+    async function handleToken(token, addresses) {
+        const response = await axios.post(
+            CHECKOUT, { data, token
+            });
+        const { status } = response.data;
+        console.log("Response:", response.data);
+        if (status === "success") {
+            toast("Success! Check email for details", { type: "success" });
+            {markSold()};
+        } else {
+            toast("Something went wrong", { type: "error" });
+        }
+        console.log({token, addresses});
     }
 
     return (
@@ -130,7 +150,17 @@ export default function Productinfo() {
                       Get Seller Details
                     </Button>
                     <br />
-                    {markAsSold} <br />  {deleteButton}
+                    {markAsSold} <br />
+                    <StripeCheckout
+                        stripeKey="pk_test_51L5LumGBpmLA0jmo4weGb6D7x7MvIGlqtx45iJpxJYkd1oxhsxHaYOeTmhb91gmyTQy8zf2x8nKRiK6OeEJMbjLO00yIOsMNAr"
+                        token={handleToken}
+                        amount={data.product.prdprice * 100}
+                        name={data.product.prdname}
+                        billingAddress
+                        shippingAddress
+                    />
+                    <br/>
+                    {deleteButton}
                 </ContentStyle>
             </Container>
             <Popup

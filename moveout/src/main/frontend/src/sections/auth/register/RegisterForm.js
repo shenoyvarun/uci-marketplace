@@ -20,7 +20,7 @@ export default function RegisterForm() {
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+    email: Yup.string().matches('uci\.edu').required('Please Enter UCI Email Only'),
     password: Yup.string().required('Password is required'),
     phoneNumber: Yup.string().required('Phone Number is required')
   });
