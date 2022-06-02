@@ -3,7 +3,10 @@ import {Link as RouterLink, useLocation, useNavigate} from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Button, Typography, Container, Box, Stack } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { pink } from '@mui/material/colors';
+import BeenhereIcon from '@mui/icons-material/Beenhere';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import DownloadIcon from '@mui/icons-material/Download';
+import { pink, yellow } from '@mui/material/colors';
 // components
 import Page from '../components/Page';
 import Popup from '../components/Popup';
@@ -15,6 +18,7 @@ import Chat from "../components/Chat";
 import StripeCheckout from "react-stripe-checkout";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {makeStyles} from "@mui/styles";
 
 
 // ----------------------------------------------------------------------
@@ -31,6 +35,81 @@ const ContentStyle = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 0)
 }));
 
+const useStyles = makeStyles(theme =>({
+    prdDetails:{
+        display: "flex",
+        justifyContent: "space-around",
+        flexWrap: "wrap",
+        padding: 50,
+    },
+
+    prdImage:{
+        maxWidth: 400,
+        maxHeight: 400,
+        minHeight: 300,
+        minWidth: 300,
+        overflow: "hidden",
+        margin: 25,
+
+        "& img":{
+            width: "100%",
+            height: "100%",
+            maxWidth: 400,
+            maxHeight: 400,
+            display: "block",
+            objectFit: "cover",
+        }
+    },
+
+    prdTable: {
+        maxWidth: 400,
+        minWidth: 300,
+        margin: 25,
+
+        "& h2": {
+            textTransform: "uppercase",
+            marginBottom: 5,
+        },
+
+        "& h3":{
+            marginTop: 5,
+            marginBottom: 5,
+        },
+        "& p":{
+            marginBottom: 4,
+        },
+    },
+
+    buttonRowBuyer: {
+        marginTop: 10,
+        marginBottom: 10,
+
+        "& Button": {
+            width: 180,
+            height: 50,
+            paddingTop:10,
+            paddingBottom:10,
+            marginRight: 5,
+            marginLeft: 5
+        }
+    },
+
+    buttonRowSeller: {
+        marginTop: 10,
+        marginBottom: 10,
+
+        "& Button": {
+            width: 180,
+            height: 50,
+            paddingTop:10,
+            paddingBottom:10,
+            marginRight: 5,
+            marginLeft: 5,
+        }
+    },
+
+}))
+
 export default function Productinfo() {
     const navigate = useNavigate();
     let location = useLocation();
@@ -38,10 +117,6 @@ export default function Productinfo() {
     console.log(data);
     const imgSrc = `/static/mock-images/products/product_${data.product.prdimage}`;
     const [openPopup, setOpenPopup] = useState(false);
-    // const sellerInfo = { firstName: '',
-    //                      lastName: '',
-    //                      email: '',
-    //                      phone: '' };
     const {sellerInfo} = useContext(UserContext);
     const [sellerInformation, setSellerInfo] = sellerInfo;
     const { userInfo } = useContext(UserContext);
@@ -86,18 +161,43 @@ export default function Productinfo() {
 
     console.log(data.product.userid);
     console.log("Seller info: ", sellerInformation);
-    let deleteButton, markAsSold;
+    let deleteButton, markAsSold, stripePayment;
     if(user.email === data.product.userid){
-        deleteButton = <Button variant="outlined" sx={{ color: pink[500] }} onClick = { handleDelete } startIcon={<DeleteIcon />}>
-            Delete Product
-        </Button>
+        deleteButton = <Button
+                        variant="outlined"
+                        sx={{ color: pink[500] }}
+                        onClick = { handleDelete }
+                        startIcon={<DeleteIcon />}>
+                        Delete Product
+                       </Button>
     }
     if(user.email === data.product.userid && data.product.status === 0){
-        markAsSold = <Button variant="contained" color="success" size = "large" onClick = { markSold }>
-            Mark As Sold
-        </Button>
+        markAsSold = <Button
+                        variant="outlined"
+                        sx={{ color: yellow[700] }}
+                        onClick = { markSold }
+                        startIcon={<BeenhereIcon />}>
+                        Mark As Sold
+                     </Button>
     }
 
+    if(data.product.status === 0){
+        stripePayment = <StripeCheckout
+            stripeKey="pk_test_51L5LumGBpmLA0jmo4weGb6D7x7MvIGlqtx45iJpxJYkd1oxhsxHaYOeTmhb91gmyTQy8zf2x8nKRiK6OeEJMbjLO00yIOsMNAr"
+            token={handleToken}
+            amount={data.product.prdprice * 100}
+            name={data.product.prdname}
+            billingAddress
+            shippingAddress
+        >
+            <Button
+                variant="contained"
+                color = "success"
+                startIcon={<ShoppingCartIcon />}>
+                Buy Now
+            </Button>
+        </StripeCheckout>
+    }
     async function handleToken(token, addresses) {
         const response = await axios.post(
             CHECKOUT, { data, token
@@ -112,57 +212,93 @@ export default function Productinfo() {
         }
         console.log({token, addresses});
     }
-
+    const classes = useStyles();
     return (
-        <Page title="Product Details">
-            <Container>
-                <ContentStyle sx={{ textAlign: 'center', alignItems: 'center' }}>
-                    <Typography variant="h3" paragraph>
-                        Product Details <br />
-                    </Typography>
-                    <Box
-                        component="img"
-                        src={imgSrc}
-                        sx={{ height: 250, mx: 'auto', my: { xs: 5, sm: 2 } }}
+        <Page title="Details">
+            <Typography sx={{ textAlign: 'center', alignItems: 'center' }} variant="h3" paragraph>
+                <u>Product Details</u><br />
+            </Typography>
+            <div className={classes.prdDetails}>
+                <div className={classes.prdImage}>
+                    <img src = {imgSrc}
+                         alt=""
                     />
-                    <Typography variant="p" paragraph>
-                        <br />
-                    </Typography>
-                    <Typography variant="h3" paragraph>
-                        <u>Product : {data.product.prdname}</u> <br />
-                    </Typography>
-                    <Typography variant="h4" paragraph>
-                        Product Category : {data.product.prdtype} <br />
-                    </Typography>
-                    <Typography variant="h4" paragraph>
-                        Condition : {data.product.prdcondition} <br />
-                    </Typography>
-                    <Typography variant="h4" paragraph>
-                        Price : ${data.product.prdprice} <br />
-                    </Typography>
-                    <Typography variant="p" paragraph>
-                        <b>Description :</b> <i>{data.product.prddec}</i> <br />
-                    </Typography>
-                    <Button
-                        size="large"
-                        variant="contained"
-                        onClick={handleOnClick}>
-                      Get Seller Details
-                    </Button>
-                    <br />
-                    {markAsSold} <br />
-                    <StripeCheckout
-                        stripeKey="pk_test_51L5LumGBpmLA0jmo4weGb6D7x7MvIGlqtx45iJpxJYkd1oxhsxHaYOeTmhb91gmyTQy8zf2x8nKRiK6OeEJMbjLO00yIOsMNAr"
-                        token={handleToken}
-                        amount={data.product.prdprice * 100}
-                        name={data.product.prdname}
-                        billingAddress
-                        shippingAddress
-                    />
-                    <br/>
-                    {deleteButton}
-                </ContentStyle>
-            </Container>
+                </div>
+                <div className={classes.prdTable}>
+                        <h2>{data.product.prdname}</h2>
+                        <h3><b>${data.product.prdprice}</b></h3>
+                        <hr />
+                        <h3><b>Details: </b></h3>
+
+                        <p><b>Category:</b> {data.product.prdtype}</p>
+                        <p><b>Condition:</b> {data.product.prdcondition}</p>
+                        <p><b>Description:</b> {data.product.prddec}</p>
+                        <hr />
+                        <div className={classes.buttonRowBuyer}>
+                            <Button
+                                variant="contained"
+                                onClick={handleOnClick}
+                                startIcon={<DownloadIcon/>}>
+                                Get Seller Details
+                            </Button>
+                            {stripePayment}
+                        </div>
+                        <div className={classes.buttonRowSeller}>
+                            {markAsSold}
+                            {deleteButton}
+                        </div>
+
+                    </div>
+            </div>
+
+            {/*<Container>*/}
+            {/*    <ContentStyle sx={{ textAlign: 'center', alignItems: 'center' }}>*/}
+            {/*        <Typography variant="h3" paragraph>*/}
+            {/*            Product Details <br />*/}
+            {/*        </Typography>*/}
+            {/*        <Box*/}
+            {/*            component="img"*/}
+            {/*            src={imgSrc}*/}
+            {/*            sx={{ height: 250, mx: 'auto', my: { xs: 5, sm: 2 } }}*/}
+            {/*        />*/}
+            {/*        <Typography variant="p" paragraph>*/}
+            {/*            <br />*/}
+            {/*        </Typography>*/}
+            {/*        <Typography variant="h3" paragraph>*/}
+            {/*            <u>Product : {data.product.prdname}</u> <br />*/}
+            {/*        </Typography>*/}
+            {/*        <Typography variant="h4" paragraph>*/}
+            {/*            Product Category : {data.product.prdtype} <br />*/}
+            {/*        </Typography>*/}
+            {/*        <Typography variant="h4" paragraph>*/}
+            {/*            Condition : {data.product.prdcondition} <br />*/}
+            {/*        </Typography>*/}
+            {/*        <Typography variant="h4" paragraph>*/}
+            {/*            Price : ${data.product.prdprice} <br />*/}
+            {/*        </Typography>*/}
+            {/*        <Typography variant="p" paragraph>*/}
+            {/*            <b>Description :</b> <i>{data.product.prddec}</i> <br />*/}
+            {/*        </Typography>*/}
+            {/*        <Button*/}
+            {/*            size="large"*/}
+            {/*            variant="contained"*/}
+            {/*            onClick={handleOnClick}>*/}
+            {/*          Get Seller Details*/}
+            {/*        </Button>*/}
+            {/*        <br />*/}
+            {/*        {markAsSold} <br />*/}
+            {/*        <StripeCheckout*/}
+            {/*            stripeKey="pk_test_51L5LumGBpmLA0jmo4weGb6D7x7MvIGlqtx45iJpxJYkd1oxhsxHaYOeTmhb91gmyTQy8zf2x8nKRiK6OeEJMbjLO00yIOsMNAr"*/}
+            {/*            token={handleToken}*/}
+            {/*            amount={data.product.prdprice * 100}*/}
+            {/*            name={data.product.prdname}*/}
+            {/*            billingAddress*/}
+            {/*            shippingAddress*/}
+            {/*        />*/}
+            {/*        <br/>*/}
+            {/*        {deleteButton}*/}
+            {/*    </ContentStyle>*/}
+            {/*</Container>*/}
             <Popup
                 title = "Seller Details"
                 openPopup = {openPopup}
