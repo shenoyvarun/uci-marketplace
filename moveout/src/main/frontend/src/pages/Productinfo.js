@@ -3,7 +3,10 @@ import {Link as RouterLink, useLocation, useNavigate} from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Button, Typography, Container, Box, Stack } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { pink } from '@mui/material/colors';
+import BeenhereIcon from '@mui/icons-material/Beenhere';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import DownloadIcon from '@mui/icons-material/Download';
+import { pink, yellow } from '@mui/material/colors';
 // components
 import Page from '../components/Page';
 import Popup from '../components/Popup';
@@ -82,7 +85,7 @@ const useStyles = makeStyles(theme =>({
         marginBottom: 10,
 
         "& Button": {
-            width: 160,
+            width: 180,
             height: 50,
             paddingTop:10,
             paddingBottom:10,
@@ -94,8 +97,9 @@ const useStyles = makeStyles(theme =>({
     buttonRowSeller: {
         marginTop: 10,
         marginBottom: 10,
+
         "& Button": {
-            width: 160,
+            width: 180,
             height: 50,
             paddingTop:10,
             paddingBottom:10,
@@ -157,18 +161,43 @@ export default function Productinfo() {
 
     console.log(data.product.userid);
     console.log("Seller info: ", sellerInformation);
-    let deleteButton, markAsSold;
+    let deleteButton, markAsSold, stripePayment;
     if(user.email === data.product.userid){
-        deleteButton = <Button variant="outlined" sx={{ color: pink[500] }} onClick = { handleDelete } startIcon={<DeleteIcon />}>
-            Delete Product
-        </Button>
+        deleteButton = <Button
+                        variant="outlined"
+                        sx={{ color: pink[500] }}
+                        onClick = { handleDelete }
+                        startIcon={<DeleteIcon />}>
+                        Delete Product
+                       </Button>
     }
     if(user.email === data.product.userid && data.product.status === 0){
-        markAsSold = <Button variant="contained" color="success" size = "large" onClick = { markSold }>
-            Mark As Sold
-        </Button>
+        markAsSold = <Button
+                        variant="outlined"
+                        sx={{ color: yellow[700] }}
+                        onClick = { markSold }
+                        startIcon={<BeenhereIcon />}>
+                        Mark As Sold
+                     </Button>
     }
 
+    if(data.product.status === 0){
+        stripePayment = <StripeCheckout
+            stripeKey="pk_test_51L5LumGBpmLA0jmo4weGb6D7x7MvIGlqtx45iJpxJYkd1oxhsxHaYOeTmhb91gmyTQy8zf2x8nKRiK6OeEJMbjLO00yIOsMNAr"
+            token={handleToken}
+            amount={data.product.prdprice * 100}
+            name={data.product.prdname}
+            billingAddress
+            shippingAddress
+        >
+            <Button
+                variant="contained"
+                color = "success"
+                startIcon={<ShoppingCartIcon />}>
+                Buy Now
+            </Button>
+        </StripeCheckout>
+    }
     async function handleToken(token, addresses) {
         const response = await axios.post(
             CHECKOUT, { data, token
@@ -207,19 +236,12 @@ export default function Productinfo() {
                         <hr />
                         <div className={classes.buttonRowBuyer}>
                             <Button
-                                size="large"
                                 variant="contained"
-                                onClick={handleOnClick}>
+                                onClick={handleOnClick}
+                                startIcon={<DownloadIcon/>}>
                                 Get Seller Details
                             </Button>
-                            <StripeCheckout
-                                stripeKey="pk_test_51L5LumGBpmLA0jmo4weGb6D7x7MvIGlqtx45iJpxJYkd1oxhsxHaYOeTmhb91gmyTQy8zf2x8nKRiK6OeEJMbjLO00yIOsMNAr"
-                                token={handleToken}
-                                amount={data.product.prdprice * 100}
-                                name={data.product.prdname}
-                                billingAddress
-                                shippingAddress
-                            />
+                            {stripePayment}
                         </div>
                         <div className={classes.buttonRowSeller}>
                             {markAsSold}
