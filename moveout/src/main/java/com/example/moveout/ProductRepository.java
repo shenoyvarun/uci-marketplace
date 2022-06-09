@@ -11,7 +11,7 @@ public interface ProductRepository extends CrudRepository<ProductTable, Integer>
     List<ProductTable> findAll();
     List<ProductTable> findAllByStatusEquals(int status);
 
-    List<ProductTable> findByPrdnameContainingOrPrdtypeContainingAndStatusEquals(String name, String type, int status);
+    List<ProductTable> findByPrdnameContainingAndStatusEqualsOrPrdtypeContainingAndStatusEquals(String name, int status1, String type, int status2);
 
 
     List<ProductTable> findByUseridAndStatusEquals(String id, int status);
