@@ -20,10 +20,14 @@ public class ProductTable {
     private String prddec;
     private String prdimage;
     private String userid;
+    private int status;
+
+
+
     public ProductTable() {
     }
 
-    public ProductTable(int id, String prdname, String prdprice, String prdtype, String prdcondition, String prddec, String prdimage, String userid) {
+    public ProductTable(int id, String prdname, String prdprice, String prdtype, String prdcondition, String prddec, String prdimage, String userid, int status) {
         this.id = id;
         this.prdname = prdname;
         this.prdprice = prdprice;
@@ -32,6 +36,7 @@ public class ProductTable {
         this.prddec = prddec;
         this.prdimage = prdimage;
         this.userid = userid;
+        this.status = status;
     }
 
     @Id
@@ -98,5 +103,12 @@ public class ProductTable {
 
     public void setuserid(String userid) {
         this.userid = userid;
+    }
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

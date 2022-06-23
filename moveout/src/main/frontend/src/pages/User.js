@@ -29,7 +29,7 @@ import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashbo
 import USERLIST from '../_mock/user';
 import {UserContext} from "../userContext";
 import axios from "axios";
-import {GET_PRODUCTS, GET_PRODUCTS_BY_NAME, GET_PRODUCTS_BY_USER} from "../api-config";
+import {GET_PRODUCTS, GET_PRODUCTS_BY_NAME, GET_PRODUCTS_BY_USER, GET_PRODUCTS_BY_USER_SOLD} from "../api-config";
 import {ProductList} from "../sections/@dashboard/products";
 
 // ----------------------------------------------------------------------
@@ -75,14 +75,22 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function User() {
-  const { userInfo, productInfo } = useContext(UserContext);
+  const { userInfo, productInfo, soldProducts } = useContext(UserContext);
   const [prodInfo, setprodInfo] = productInfo;
-  const [ user ] = userInfo
+  const [soldProductsInfo, setsoldProductsInfo] = soldProducts;
+  const [ user ] = userInfo;
   useEffect(() =>{
     axios.post(GET_PRODUCTS_BY_USER, user.email).then((response) => {
       console.log(response.data);
       setprodInfo(response.data);
       console.log(productInfo);
+    }).catch((error) => {
+      console.log(error);
+    })
+    axios.post(GET_PRODUCTS_BY_USER_SOLD, user.email).then((response) => {
+      console.log(response.data);
+      setsoldProductsInfo(response.data);
+      console.log(soldProductsInfo);
     }).catch((error) => {
       console.log(error);
     })
@@ -148,19 +156,42 @@ export default function User() {
 
   const isUserNotFound = filteredUsers.length === 0;
 
+  let addText;
+  if(productInfo[0].length === 0){
+    addText = "Start selling all the stuff you don't need!!"
+  }
+
+  let soldText;
+  if(soldProductsInfo.length === 0){
+    soldText = "Not sold anything yet!"
+  }
   return (
     <Page title="User">
       <Container>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Products Listed by the User
+          Active Products Listed by the User
+        </Typography>
+        <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
+          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
+          </Stack>
+        </Stack>
+          {addText}
+        <ProductList products={prodInfo} />
+      </Container>
+      <br /><br /><br /><br />
+      <Container>
+        <Typography variant="h4" sx={{ mb: 5 }}>
+          Sold Products Listed by the User
         </Typography>
 
         <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
           </Stack>
         </Stack>
-
-        <ProductList products={prodInfo} />
+        <Typography>
+          {soldText}
+        </Typography>
+        <ProductList products={soldProductsInfo} />
       </Container>
     </Page>
   );

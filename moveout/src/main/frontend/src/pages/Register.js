@@ -81,7 +81,7 @@ export default function Register() {
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
               Hi, Welcome to UCI Marketplace
             </Typography>
-            {/*<img alt="register" src="/static/illustrations/illustration_register.png" />*/}
+            <img alt="register" src="/static/illustrations/logo.png" />
           </SectionStyle>
         )}
 

@@ -8,6 +8,7 @@ CREATE TABLE move_out_sale.product_table(
     prddec VARCHAR(300) NOT NULL,
     userid VARCHAR(100) NOT NULL,
     prdimage VARCHAR(300) NOT NULL,
+    status INTEGER DEFAULT 1,
     PRIMARY KEY(id)
 );
 
